@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22225" systemVersion="23B81" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Ingredient" representedClassName=".CDIngredient" syncable="YES" codeGenerationType="category">
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String" minValueString="1"/>
+        <attribute name="userDescription" attributeType="String"/>
+        <relationship name="owner" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="ingredients" inverseEntity="User"/>
+        <relationship name="recipeUses" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RecipeStepIngredient" inverseName="ingredient" inverseEntity="RecipeStepIngredient"/>
+        <relationship name="stock" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StockedMeasure" inverseName="ingredient" inverseEntity="StockedMeasure"/>
+        <relationship name="tags" toMany="YES" deletionRule="Nullify" destinationEntity="IngredientTag" inverseName="taggedIngredients" inverseEntity="IngredientTag"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+            <uniquenessConstraint>
+                <constraint value="name"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="IngredientTag" representedClassName=".CDIngredientTag" syncable="YES" codeGenerationType="category">
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String"/>
+        <relationship name="owner" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="validIngredientTags" inverseEntity="User"/>
+        <relationship name="recipeSteps" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="RecipeStepIngredientTag" inverseName="ingredientTags" inverseEntity="RecipeStepIngredientTag"/>
+        <relationship name="taggedIngredients" toMany="YES" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="tags" inverseEntity="Ingredient"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="Recipe" representedClassName="CDRecipe" syncable="YES" codeGenerationType="category">
+        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="userDescription" optional="YES" attributeType="String"/>
+        <relationship name="owner" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="recipes" inverseEntity="User"/>
+        <relationship name="recipeSteps" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="RecipeStep" inverseName="recipe" inverseEntity="RecipeStep"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="id"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="RecipeStep" representedClassName=".CDRecipeStep" isAbstract="YES" syncable="YES" codeGenerationType="category">
+        <relationship name="recipe" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Recipe" inverseName="recipeSteps" inverseEntity="Recipe"/>
+    </entity>
+    <entity name="RecipeStepIngredient" representedClassName=".CDRecipeStepIngredient" parentEntity="RecipeStep" syncable="YES" codeGenerationType="category">
+        <attribute name="countDescription" optional="YES" attributeType="String"/>
+        <attribute name="countMeasurement" optional="YES" attributeType="Transformable" valueTransformerName="CountMeasureValueTransformer" customClassName="Measurement&lt;Unit&gt;"/>
+        <attribute name="volumeMeasurement" optional="YES" attributeType="Transformable" valueTransformerName="VolumeMeasurementValueTransformer" customClassName="Measurement&lt;UnitVolume&gt;"/>
+        <relationship name="ingredient" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="recipeUses" inverseEntity="Ingredient"/>
+    </entity>
+    <entity name="RecipeStepIngredientTag" representedClassName=".CDRecipeStepIngredientTag" parentEntity="RecipeStep" syncable="YES" codeGenerationType="category">
+        <attribute name="countDescription" optional="YES" attributeType="String"/>
+        <attribute name="countMeasurement" optional="YES" attributeType="Transformable" valueTransformerName="CountMeasureValueTransformer" customClassName="Measurement&lt;Unit&gt;"/>
+        <attribute name="volumeMeasurement" optional="YES" attributeType="Transformable" valueTransformerName="VolumeMeasurementValueTransformer" customClassName="Measurement&lt;UnitVolume&gt;"/>
+        <relationship name="ingredientTags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="IngredientTag" inverseName="recipeSteps" inverseEntity="IngredientTag"/>
+    </entity>
+    <entity name="RecipeStepInstruction" representedClassName=".CDRecipeStepInstruction" parentEntity="RecipeStep" syncable="YES" codeGenerationType="category">
+        <attribute name="instructionText" optional="YES" attributeType="String"/>
+    </entity>
+    <entity name="StockedMeasure" representedClassName=".CDStockedMeasure" syncable="YES" codeGenerationType="category">
+        <attribute name="countDescription" optional="YES" attributeType="String"/>
+        <attribute name="countMeasurement" optional="YES" attributeType="Transformable" valueTransformerName="CountMeasurementValueTransformer" customClassName="Measurement&lt;Unit&gt;"/>
+        <attribute name="volumeMeasurement" optional="YES" attributeType="Transformable" valueTransformerName="VolumeMeasurementValueTransformer" customClassName="Measurement&lt;UnitVolume&gt;"/>
+        <relationship name="ingredient" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Ingredient" inverseName="stock" inverseEntity="Ingredient"/>
+        <relationship name="owner" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="User" inverseName="stockedMeasures" inverseEntity="User"/>
+        <uniquenessConstraints>
+            <uniquenessConstraint>
+                <constraint value="ingredient"/>
+            </uniquenessConstraint>
+        </uniquenessConstraints>
+    </entity>
+    <entity name="User" representedClassName=".CDUser" syncable="YES" codeGenerationType="category">
+        <relationship name="ingredients" toMany="YES" deletionRule="Cascade" destinationEntity="Ingredient" inverseName="owner" inverseEntity="Ingredient"/>
+        <relationship name="recipes" toMany="YES" deletionRule="Nullify" destinationEntity="Recipe" inverseName="owner" inverseEntity="Recipe"/>
+        <relationship name="stockedMeasures" toMany="YES" deletionRule="Nullify" destinationEntity="StockedMeasure" inverseName="owner" inverseEntity="StockedMeasure"/>
+        <relationship name="validIngredientTags" toMany="YES" deletionRule="Nullify" destinationEntity="IngredientTag" inverseName="owner" inverseEntity="IngredientTag"/>
+    </entity>
+</model>

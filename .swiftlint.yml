@@ -1,0 +1,18 @@
+disabled_rules:
+  - vertical_whitespace
+  - trailing_comma
+  - nesting
+  - large_tuple
+  - file_length
+  - type_name
+
+identifier_name:
+  excluded:
+    - to
+    - id
+
+excluded:
+  - NowChurningTests/*
+  - NowChurning/AppDelegate.swift
+  - NowChurning/SceneDelegate.swift
+

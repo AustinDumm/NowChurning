@@ -1,0 +1,142 @@
+/* 
+  Localizable.strings
+  NowChurning
+
+  Created by Austin Dumm on 4/2/23.
+  
+*/
+
+"app_title" = "Now Churning";
+
+/* The word "Bar" refers to a place where alcohol or mixed recipes are stored and served */
+"ingredients_area_title" = " Inventory";
+"recipes_area_title" = "Recipe Recipes";
+
+"editing_state_text" = "Editing";
+
+"creating_ingredient_state_text" = "New Ingredient";
+"creating_ingredient_discard_message" = "Are you sure you want to discard this new ingredient?";
+"creating_ingredient_discard_confirm_prompt" = "Discard New Ingredient";
+
+"creating_measure_discard_message" = "Are you sure you want to discard this new stock of an ingredient?";
+"creating_measure_discard_confirm_prompt" = "Yes, Discard";
+
+"ingredient_invalid_empty_name" = "Ingredient must have a name";
+"ingredient_name_already_exists" = "Ingredient name already exists.";
+"ingredient_name_already_exists_suggestion" = "Tap here to edit";
+
+"inventory_add_header" = "Add to Inventory";
+"inventory_add_new_ingredient" = "New Ingredient";
+"inventory_ingredients_sections_header" = "Suggestions:";
+"inventory_add_item_action" = "Add Ingredient";
+"inventory_edit_list_action" = "Edit Inventory List";
+
+"inventory_navigate_description" = "Are you sure you wish to navigate to an existing Ingredient? This is will overwrite any unsaved changes";
+"inventory_navigate_confirm" = "Confirm";
+"inventory_navigate_cancel" = "No, Stay Here";
+"inventory_measurement_section_title" = "In Stock";
+
+"creating_recipe_state_text" = "New Recipe";
+"creating_recipe_discard_message" = "Are you sure you want to discard this new recipe?";
+"creating_recipe_discard_confirm_prompt" = "Discard New Recipe";
+
+"recipe_invalid_empty_name" = "Recipe must have a name";
+
+"recipe_add_stock_alert_description" = "Do you wish to add an amount of this ingredient to  Inventory?";
+"recipe_add_stock_alert_cancel" = "No";
+"recipe_add_stock_alert_confirm" = "Yes";
+
+"recipe_add_step_cell_title" = "Add Recipe Step";
+"recipe_add_amount_section_title" = "Amount in Recipe";
+"recipe_add_ingredient_screen_title" = "Add Recipe Ingredient";
+"recipe_add_new_ingredient_cell" = "New Ingredient";
+
+"recipe_list_add_new_recipe" = "Add New Recipe";
+"recipe_list_edit_list" = "Edit Recipe List";
+
+"add_by_measurement_cancel_alert" = "Nothing has been added to your inventory yet. Do you wish to exit or keep editing.";
+"add_by_measurement_stay" = "Keep Editing";
+"add_by_measurement_leave" = "Discard and Exit";
+
+"recipe_by_tag_anything" = "Any Ingredient";
+"recipe_by_tag_recipe_prefix" = "Any";
+
+"editing_discard_message" = "Are you sure you want to discard these changes?";
+"editing_discard_confirm_prompt" = "Discard Changes";
+"editing_discard_cancel_prompt" = "Keep Editing";
+
+"item_list_name_header_text" = "Name";
+"item_list_description_header_text" = "Description";
+"item_list_tags_header_text" = "#Tags";
+"item_list_recipe_header_text" = "Recipe";
+"item_list_edit_tags_prompt" = "Edit #Tags";
+"item_list_required_section_suffix" = "(Required)";
+"item_list_optional_section_suffix" = "(Optional)";
+
+"ingredient_tag_selector_title" = "Ingredient #Tags";
+
+"measure_any_measurement_description" = "(Unspecified)";
+"measure_volume_measurement_description" = "By Volume";
+"measure_count_measurement_description" = "By Custom Unit";
+"measure_type_title" = "Type";
+"measure_value_title" = "Amount";
+"measure_unit_title" = "Unit";
+"measure_description_title" = "Unit Name";
+
+"my_recipes_preview_switch_to_inventory" = "Do you want to leave Recipes and navigate to Inventory?";
+"my_recipes_preview_switch_confirm" = "Yes, go to Inventory";
+"my_recipes_preview_switch_cancel" = "No, stay in Recipe Recipes";
+
+"recipe_recipe_unstocked_alert" = "This item is not stocked in your inventory.";
+"recipe_recipe_unstocked_resolution" = "Add to Inventory";
+
+"my_recipes_add_switch_to_inventory" = "Do you want to leave Recipes and add this ingredient to Inventory?";
+
+"measure_screen_title" = "Edit Amount";
+
+"ingredient_by_tag_title" = "Matching Ingredients";
+
+"add_step_title" = "Add Recipe Step";
+"add_step_ingredient_name" = "Ingredient By Name";
+"add_step_by_tag_name" = "Ingredient By #Tags";
+"add_instruction_name" = "Recipe Instruction";
+
+"edit_ingredient_action" = "Edit Ingredient";
+
+"add_step_ingredient_list_title" = "Select Ingredient";
+
+"ingredient_name_header_text" = "Ingredient";
+"by_tags_name_header_text" = "#Tags";
+"instruction_header_text" = "Instruction";
+"create_instruction_screen_text" = "Create Instruction";
+"measurement_name_header_text" = "Amount";
+"edit_ingredient_step_title" = "Edit By Ingredient";
+"edit_by_tags_step_title" = "Edit By #Tags";
+"edit_instruction_step_title" = "Edit Instruction";
+
+"generic_cancel_alert_description" = "You have unsaved changes. Are you sure you want to cancel?";
+"generic_cancel_alert_confirm" = "Yes. Cancel Changes";
+"generic_cancel_alert_cancel" = "No. Stay Here";
+
+"inventory_instruction" = "Add specific ingredients and bottles that you have in stock. Remember to add tags so your ingredients will show up in Recipes.";
+"my_recipes_empty_message" = "No recipes found. Add recipes to your Recipes with the plus button above.";
+"tag_filtered_ingredients_empty_message" = "No Ingredients found that match those tags";
+
+"tag_filtered_create_ingredient_alert_description" = "Do you want to go to Inventory and add an ingredient with these #Tags?";
+"tag_filtered_create_ingredient_alert_cancel" = "No. Stay Here";
+"tag_filtered_create_ingredient_alert_confirm" = "Yes. Go to Inventory";
+
+"user_error_header" = "Error";
+"user_error_confirm" = "OK";
+"user_error_storage_error" = "Could not save or retrieve data from your device. Any changes you make might not be saved. Please restart your app or contact the developer.";
+
+"default_action_name_save" = "Save";
+"default_action_name_cancel" = "Cancel";
+"default_action_name_back" = "Back";
+"default_action_name_edit" = "Edit";
+"default_action_name_add" = "Add";
+"default_action_name_done" = "Done";
+
+// Custom Unit Names
+"dashes" = "dashes";
+"leaves" = "leaves";

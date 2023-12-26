@@ -1,0 +1,10 @@
+
+sources:
+    - ../..
+templates:
+    - ./Templates
+output:
+    ../../NowPouringTests/Generated
+args:
+    autoMockableTestableImports:
+        - "NowPouring"
