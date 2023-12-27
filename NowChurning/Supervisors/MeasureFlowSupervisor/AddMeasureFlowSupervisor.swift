@@ -42,7 +42,7 @@ class AddMeasureFlowSupervisor: Supervisor {
     weak var parent: AddMeasureFlowSupervisorParent?
     private var state: State
     private let content: Content
-    private let navigator: UINavigationController
+    private let navigator: StackNavigation
 
     private let initialTop: UIViewController?
 
@@ -51,7 +51,7 @@ class AddMeasureFlowSupervisor: Supervisor {
     init?(
         measureListStore: StockedMeasureListCoreDataStore,
         parent: AddMeasureFlowSupervisorParent? = nil,
-        navigator: UINavigationController,
+        navigator: StackNavigation,
         content: Content
     ) {
         self.measureListStore = measureListStore
@@ -104,7 +104,7 @@ class AddMeasureFlowSupervisor: Supervisor {
         toAddNewFrom measureType: MeasureFlowSupervisor.InitialMeasureType,
         measureListStore: StockedMeasureListCoreDataStore,
         parent: AddMeasureFlowSupervisorParent? = nil,
-        navigator: UINavigationController,
+        navigator: StackNavigation,
         content: Content
     ) {
         let supervisor = MeasureFlowSupervisor(

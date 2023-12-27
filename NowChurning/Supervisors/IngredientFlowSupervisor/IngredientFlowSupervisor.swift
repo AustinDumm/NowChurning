@@ -30,8 +30,7 @@ class IngredientFlowSupervisor: NSObject, Supervisor {
         )
     }
     weak var parent: IngredientFlowSupervisorParent?
-    private let navigator: UINavigationController
-    private weak var oldNavigatorDelegate: UINavigationControllerDelegate?
+    private let navigator: StackNavigation
 
     private var state: State?
     private let content: Content
@@ -48,17 +47,13 @@ class IngredientFlowSupervisor: NSObject, Supervisor {
 
     init(
         parent: IngredientFlowSupervisorParent? = nil,
-        navigator: UINavigationController,
+        navigator: StackNavigation,
         ingredient: Ingredient? = nil,
         ingredientStore: IngredientListStoreActionSink,
         content: Content
     ) {
         self.parent = parent
         self.navigator = navigator
-        self.oldNavigatorDelegate = self
-            .navigator
-            .delegate
-
         self.content = content
 
         super.init()
@@ -77,8 +72,7 @@ class IngredientFlowSupervisor: NSObject, Supervisor {
             ), container)
         )
 
-        self.navigator
-            .delegate = self
+        self.navigator.pushDelegate(self)
         self.navigator
             .pushViewController(
                 container,
@@ -117,8 +111,7 @@ class IngredientFlowSupervisor: NSObject, Supervisor {
     }
 
     private func endSelf() {
-        self.navigator
-            .delegate = self.oldNavigatorDelegate
+        self.navigator.popDelegate()
         self.parent?
             .childDidEnd(supervisor: self)
     }
@@ -186,7 +179,7 @@ extension IngredientFlowSupervisor: IngredientDetailsSupervisorParent {
 
     func navigateToTagSelector(forIngredient ingredient: Ingredient) {
         let container = UIViewController()
-        let modalNavigation = UINavigationController(rootViewController: container)
+        let modalNavigation = StackNavigation(rootViewController: container)
 
         guard
             case .ingredientDetails(
@@ -277,7 +270,7 @@ extension IngredientFlowSupervisor: UINavigationControllerDelegate {
             .viewControllers
             .contains(detailsViewController) {
             self.endSelf()
-            self.oldNavigatorDelegate?.navigationController?(
+            navigationController.delegate?.navigationController?(
                 navigationController,
                 didShow: viewController,
                 animated: animated

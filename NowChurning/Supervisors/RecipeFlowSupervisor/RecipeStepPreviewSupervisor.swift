@@ -45,12 +45,12 @@ class RecipeStepPreviewSupervisor: NSObject, Supervisor {
 
     private var state: State?
     private let content: Content
-    private let navigator: UINavigationController
-    private var modalNavigator: UINavigationController!
+    private let navigator: StackNavigation
+    private var modalNavigator: StackNavigation!
 
     init?(
         parent: RecipeStepPreviewSupervisorParent? = nil,
-        navigator: UINavigationController,
+        navigator: StackNavigation,
         recipeStep: RecipeDetails.Step,
         content: Content
     ) {
@@ -141,7 +141,7 @@ class RecipeStepPreviewSupervisor: NSObject, Supervisor {
         }
 
         self.modalNavigator.presentationController?.delegate = self
-        self.modalNavigator.delegate = self
+        self.modalNavigator.pushDelegate(self)
     }
 
     func canEnd() -> Bool {

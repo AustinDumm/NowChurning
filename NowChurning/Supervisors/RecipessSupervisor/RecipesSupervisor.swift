@@ -38,8 +38,7 @@ class RecipesSupervisor: NSObject {
 
     weak var parent: RecipesSupervisorParent?
 
-    private let navigator: UINavigationController
-    private let oldNavigationDelegate: UINavigationControllerDelegate?
+    private let navigator: StackNavigation
     private let oldAccent: UIColor?
     private let rootTopController: UIViewController?
     private let content: Content
@@ -64,13 +63,12 @@ class RecipesSupervisor: NSObject {
 
     init?(
         parent: RecipesSupervisorParent?,
-        navigator: UINavigationController,
+        navigator: StackNavigation,
         content: Content
     ) {
         self.parent = parent
 
         self.navigator = navigator
-        self.oldNavigationDelegate = self.navigator.delegate
         self.rootTopController = self.navigator.topViewController
 
         self.oldAccent = self.navigator.view.tintColor
@@ -82,7 +80,7 @@ class RecipesSupervisor: NSObject {
 
         super.init()
 
-        self.navigator.delegate = self
+        self.navigator.pushDelegate(self)
 
         let container = UIViewController()
         container.navigationItem.largeTitleDisplayMode = .never
@@ -122,7 +120,7 @@ class RecipesSupervisor: NSObject {
         UINavigationBar.appearance().tintColor = self.oldAccent
         self.navigator.view.tintColor = self.oldAccent
         self.navigator.navigationBar.tintColor = self.oldAccent
-        self.navigator.delegate = self.oldNavigationDelegate
+        self.navigator.popDelegate()
         self.parent?.childDidEnd(supervisor: self)
     }
 }
@@ -241,7 +239,7 @@ extension RecipesSupervisor: RecipeListSupervisorParent {
         case .myRecipes(
             let recipeListPair
         ):
-            let modalNavigation = UINavigationController()
+            let modalNavigation = StackNavigation()
             let supervisor = RecipeFlowSupervisor(
                 parent: self,
                 navigator: modalNavigation,
@@ -320,7 +318,7 @@ extension RecipesSupervisor: UINavigationControllerDelegate {
                 .viewControllers
                 .contains(container) {
                 self.endSelf()
-                self.oldNavigationDelegate?.navigationController?(
+                navigationController.delegate?.navigationController?(
                     navigationController,
                     didShow: viewController,
                     animated: animated

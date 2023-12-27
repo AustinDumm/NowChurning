@@ -12,7 +12,7 @@ import Factory
 final class MeasureFlowSupervisorTests: SupervisorTests {
 
     var parent: MeasureFlowSupervisorParentMock!
-    var navigator: UINavigationController!
+    var navigator: StackNavigation!
     var store: StockedMeasureListCoreDataStore!
 
     var testMeasure: Measure {
@@ -37,7 +37,7 @@ final class MeasureFlowSupervisorTests: SupervisorTests {
         try super.setUpWithError()
 
         self.parent = .init()
-        self.navigator = UINavigationController(rootViewController: .init())
+        self.navigator = StackNavigation(rootViewController: .init())
         self.store = .init(
             domainModelSink: MeasureListDomainModelSinkMock(),
             user: Container.shared.coreDataUserManager().user,
@@ -195,7 +195,7 @@ final class MeasureFlowSupervisorTests: SupervisorTests {
 
     func test_WhenNavigationPopped_DoesReplaceNavigationDelegate() throws {
         let mockDelegate = MockUINavigationControllerDelegate()
-        self.navigator.delegate = mockDelegate
+        self.navigator.pushDelegate(mockDelegate)
         let supervisor = MeasureFlowSupervisor(
             parent: self.parent,
             navigator: self.navigator,

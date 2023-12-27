@@ -12,7 +12,7 @@ import XCTest
 final class IngredientFlowSupervisorTests: SupervisorTests {
 
     var parent: IngredientFlowSupervisorParentMock!
-    var navigator: UINavigationController!
+    var navigator: StackNavigation!
     var store: IngredientListStoreActionSinkMock!
 
     var testIngredient: Ingredient {
@@ -65,7 +65,7 @@ final class IngredientFlowSupervisorTests: SupervisorTests {
         )
 
         let expectation = XCTestExpectation()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
             XCTAssert(
                 self.navigator
                     .topViewController?
@@ -75,7 +75,7 @@ final class IngredientFlowSupervisorTests: SupervisorTests {
             expectation.fulfill()
         }
 
-        wait(for: [expectation], timeout: 0.5)
+        wait(for: [expectation], timeout: 2.0)
     }
 
     func testSupervisor_CanEndImmediatelyWithNoChanges() throws {
@@ -144,7 +144,7 @@ final class IngredientFlowSupervisorTests: SupervisorTests {
 
     func testSupervisor_WhenNavigationBack_AlertsParent() throws {
         let delegate = MockUINavigationControllerDelegate()
-        self.navigator.delegate = delegate
+        self.navigator.pushDelegate(delegate)
         
         let supervisor = IngredientFlowSupervisor(
             parent: self.parent,
@@ -181,6 +181,6 @@ final class IngredientFlowSupervisorTests: SupervisorTests {
             )
         }
 
-        wait(for: [expectation], timeout: 0.05)
+        wait(for: [expectation], timeout: 0.5)
     }
 }

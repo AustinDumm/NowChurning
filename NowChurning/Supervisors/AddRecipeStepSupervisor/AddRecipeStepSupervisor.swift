@@ -50,19 +50,17 @@ class AddRecipeStepSupervisor: NSObject, Supervisor {
 
     weak var parent: AddRecipeStepSupervisorParent?
 
-    private let navigator: UINavigationController
-    private weak var oldNavigatorDelegate: UINavigationControllerDelegate?
+    private let navigator: StackNavigation
     private let content: Content
 
     private var stateStack = [State]()
 
     init(
-        navigator: UINavigationController,
+        navigator: StackNavigation,
         parent: AddRecipeStepSupervisorParent? = nil,
         content: Content
     ) {
         self.navigator = navigator
-        self.oldNavigatorDelegate = self.navigator.delegate
 
         self.parent = parent
         self.content = content
@@ -114,7 +112,7 @@ class AddRecipeStepSupervisor: NSObject, Supervisor {
         ))
 
         self.stateStack.append(.typeSelect(typeSelectController, navBarManager))
-        self.navigator.delegate = self
+        self.navigator.pushDelegate(self)
     }
 
     func canEnd() -> Bool {
@@ -126,7 +124,7 @@ class AddRecipeStepSupervisor: NSObject, Supervisor {
     }
 
     private func endSelf() {
-        self.navigator.delegate = self.oldNavigatorDelegate
+        self.navigator.popDelegate()
         self.parent?.childDidEnd(supervisor: self)
     }
 }
@@ -458,7 +456,7 @@ extension AddRecipeStepSupervisor: UINavigationControllerDelegate {
 
             if self.stateStack.isEmpty {
                 self.endSelf()
-                self.oldNavigatorDelegate?.navigationController?(
+                navigationController.delegate?.navigationController?(
                     navigationController,
                     didShow: viewController,
                     animated: animated

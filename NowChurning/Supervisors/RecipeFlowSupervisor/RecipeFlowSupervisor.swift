@@ -40,8 +40,7 @@ class RecipeFlowSupervisor: NSObject, Supervisor {
     }
 
     private weak var parent: RecipeFlowSupervisorParent?
-    private let navigator: UINavigationController
-    private weak var oldNavigatorDelegate: UINavigationControllerDelegate?
+    private let navigator: StackNavigation
     private let topViewController: UIViewController?
 
     private var state: State?
@@ -61,7 +60,7 @@ class RecipeFlowSupervisor: NSObject, Supervisor {
 
     init(
         parent: RecipeFlowSupervisorParent,
-        navigator: UINavigationController,
+        navigator: StackNavigation,
         recipe: Recipe? = nil,
         recipeListStore: RecipeListCoreDataStore,
         content: Content
@@ -70,7 +69,6 @@ class RecipeFlowSupervisor: NSObject, Supervisor {
         self.content = content
         self.navigator = navigator
         self.topViewController = navigator.topViewController
-        self.oldNavigatorDelegate = navigator.delegate
         self.recipeListStore = recipeListStore
 
         super.init()
@@ -87,7 +85,7 @@ class RecipeFlowSupervisor: NSObject, Supervisor {
             ), container)
         )
 
-        self.navigator.delegate = self
+        self.navigator.pushDelegate(self)
         self.navigator
             .pushViewController(
                 container,
@@ -179,9 +177,8 @@ class RecipeFlowSupervisor: NSObject, Supervisor {
     }
 
     private func endSelf() {
-        self.navigator.delegate = self.oldNavigatorDelegate
-        self.parent?
-            .childDidEnd(supervisor: self)
+        self.navigator.popDelegate()
+        self.parent?.childDidEnd(supervisor: self)
     }
 }
 
@@ -268,7 +265,7 @@ extension RecipeFlowSupervisor: RecipeDetailsSupervisorParent {
             return
         }
 
-        let modalNavigation = UINavigationController()
+        let modalNavigation = StackNavigation()
 
         let addStepSupervisor = AddRecipeStepSupervisor(
             navigator: modalNavigation,
@@ -382,7 +379,7 @@ extension RecipeFlowSupervisor: UINavigationControllerDelegate {
             .viewControllers
             .contains(recipeContainer) {
             self.endSelf()
-            self.oldNavigatorDelegate?.navigationController?(
+            navigationController.delegate?.navigationController?(
                 navigationController,
                 didShow: viewController,
                 animated: animated

@@ -38,8 +38,7 @@ class InventorySupervisor: NSObject {
 
     weak var parent: ParentSupervisor?
 
-    private let navigator: UINavigationController
-    private weak var oldNavigationDelegate: UINavigationControllerDelegate?
+    private let navigator: StackNavigation
     private let oldAccent: UIColor?
     private let rootTopController: UIViewController?
 
@@ -64,13 +63,12 @@ class InventorySupervisor: NSObject {
 
     init(
         parent: ParentSupervisor?,
-        navigator: UINavigationController,
+        navigator: StackNavigation,
         content: Content
     ) {
         self.parent = parent
 
         self.navigator = navigator
-        self.oldNavigationDelegate = self.navigator.delegate
         self.rootTopController = self.navigator.topViewController
 
         self.oldAccent = self.navigator.view.tintColor
@@ -81,7 +79,7 @@ class InventorySupervisor: NSObject {
     }
 
     func start() -> Bool {
-        self.navigator.delegate = self
+        self.navigator.pushDelegate(self)
 
         let container = UIViewController()
         guard let supervisor = MeasureListSupervisor(
@@ -104,7 +102,7 @@ class InventorySupervisor: NSObject {
     }
 
     func startEdit(ingredient: Ingredient) -> Bool {
-        self.navigator.delegate = self
+        self.navigator.pushDelegate(self)
         let listContainer = UIViewController()
         listContainer.navigationItem.largeTitleDisplayMode = .never
         guard
@@ -143,7 +141,7 @@ class InventorySupervisor: NSObject {
     }
 
     func startAdd(ingredient: Ingredient) -> Bool {
-        self.navigator.delegate = self
+        self.navigator.pushDelegate(self)
 
         let listContainer = UIViewController()
         listContainer.navigationItem.largeTitleDisplayMode = .never
@@ -158,7 +156,7 @@ class InventorySupervisor: NSObject {
             return false
         }
 
-        let modalNavigation = UINavigationController()
+        let modalNavigation = StackNavigation()
         let addMeasure = AddMeasureFlowSupervisor(
             toAddNewFrom: .existingIngredient(ingredient),
             measureListStore: listSupervisor.listStore,
@@ -202,7 +200,7 @@ class InventorySupervisor: NSObject {
         UINavigationBar.appearance().tintColor = self.oldAccent
         self.navigator.navigationBar.tintColor = self.oldAccent
         self.navigator.navigationBar.tintColor = self.oldAccent
-        self.navigator.delegate = self.oldNavigationDelegate
+        self.navigator.popDelegate()
         self.parent?.childDidEnd(supervisor: self)
     }
 }
@@ -318,7 +316,7 @@ extension InventorySupervisor: MeasureListSupervisorParent {
 
         switch self.state {
         case .inventoryList(let inventoryPair):
-            let modalNavigation = UINavigationController()
+            let modalNavigation = StackNavigation()
             guard let supervisor = AddMeasureFlowSupervisor(
                 measureListStore: store,
                 parent: self,
@@ -359,7 +357,7 @@ extension InventorySupervisor: UINavigationControllerDelegate {
                 .viewControllers
                 .contains(container) {
                 self.endSelf()
-                self.oldNavigationDelegate?.navigationController?(
+                navigationController.delegate?.navigationController?(
                     navigationController,
                     didShow: viewController,
                     animated: animated
@@ -591,7 +589,7 @@ extension InventorySupervisor: MeasureFlowSupervisorParent, AddMeasureFlowSuperv
                 animated: true
             ) { [weak self] in
                 guard let self else { return }
-                let modalNavigation = UINavigationController()
+                let modalNavigation = StackNavigation()
                 let addMeasureSupervisor = AddMeasureFlowSupervisor(
                     toAddNewFrom: .existingIngredient(ingredient),
                     measureListStore: store,

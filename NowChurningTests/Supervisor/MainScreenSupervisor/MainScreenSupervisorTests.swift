@@ -11,13 +11,13 @@ import XCTest
 
 final class MainScreenSupervisorTests: SupervisorTests {
 
-    var navigation: UINavigationController!
+    var navigation: StackNavigation!
     var delegate: MainScreenAppNavDelegateMock!
 
     override func setUpWithError() throws {
         try super.setUpWithError()
 
-        self.navigation = UINavigationController()
+        self.navigation = StackNavigation()
         self.delegate = .init()
     }
 

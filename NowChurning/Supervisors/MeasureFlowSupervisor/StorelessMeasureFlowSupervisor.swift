@@ -37,8 +37,7 @@ class StorelessMeasureFlowSupervisor: NSObject, Supervisor {
         )
     }
     weak var parent: StorelessMeasureFlowSupervisorParent?
-    private let navigator: UINavigationController
-    private weak var oldNavigatorDelegate: UINavigationControllerDelegate?
+    private let navigator: StackNavigation
 
     private var state: State?
     private let content: Content
@@ -56,16 +55,13 @@ class StorelessMeasureFlowSupervisor: NSObject, Supervisor {
 
     init(
         parent: StorelessMeasureFlowSupervisorParent? = nil,
-        navigator: UINavigationController,
+        navigator: StackNavigation,
         measure: InitialMeasureType,
         content: Content,
         completion: (() -> Void)? = nil
     ) {
         self.parent = parent
         self.navigator = navigator
-        self.oldNavigatorDelegate = self
-            .navigator
-            .delegate
 
         self.content = content
 
@@ -85,8 +81,7 @@ class StorelessMeasureFlowSupervisor: NSObject, Supervisor {
             (supervisor, container)
         )
 
-        self.navigator
-            .delegate = self
+        self.navigator.pushDelegate(self)
         self.navigator
             .pushViewController(
                 container,
@@ -122,12 +117,12 @@ class StorelessMeasureFlowSupervisor: NSObject, Supervisor {
             fallthrough
         case .measureDetails(let (supervisor, _)):
             supervisor.requestEnd { [weak self] in
-                self?.navigator.delegate = self?.oldNavigatorDelegate
+                self?.navigator.popDelegate()
                 onEnd()
             }
         case .measurementEdit(_, let supervisor):
             return supervisor.requestEnd { [weak self] in
-                self?.navigator.delegate = self?.oldNavigatorDelegate
+                self?.navigator.popDelegate()
                 onEnd()
             }
         case .none:
@@ -136,8 +131,7 @@ class StorelessMeasureFlowSupervisor: NSObject, Supervisor {
     }
 
     private func endSelf() {
-        self.navigator
-            .delegate = self.oldNavigatorDelegate
+        self.navigator.popDelegate()
         self.parent?
             .childDidEnd(supervisor: self)
     }
@@ -348,7 +342,7 @@ extension StorelessMeasureFlowSupervisor: UINavigationControllerDelegate {
             .viewControllers
             .contains(detailsViewController) {
             self.endSelf()
-            self.oldNavigatorDelegate?.navigationController?(
+            navigationController.delegate?.navigationController?(
                 navigationController,
                 didShow: viewController,
                 animated: animated

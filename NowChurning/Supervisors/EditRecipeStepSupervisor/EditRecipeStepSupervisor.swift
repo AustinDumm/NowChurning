@@ -43,13 +43,12 @@ class EditRecipeStepSupervisor: NSObject, Supervisor {
     private var state: State
 
     private let content: Content
-    private let navigator: UINavigationController
+    private let navigator: StackNavigation
 
     private let oldTop: UIViewController?
-    private weak var oldNavigationDelegate: UINavigationControllerDelegate?
 
     init(
-        navigator: UINavigationController,
+        navigator: StackNavigation,
         step: RecipeDetails.Step,
         parent: EditRecipeStepSupervisorParent? = nil,
         content: Content
@@ -83,8 +82,7 @@ class EditRecipeStepSupervisor: NSObject, Supervisor {
 
         supervisor.parent = self
         self.navigator.pushViewController(container, animated: true)
-        self.oldNavigationDelegate = self.navigator.delegate
-        self.navigator.delegate = self
+        self.navigator.pushDelegate(self)
     }
 
     func canEnd() -> Bool {
@@ -108,7 +106,7 @@ class EditRecipeStepSupervisor: NSObject, Supervisor {
     }
 
     private func endSelf() {
-        self.navigator.delegate = self.oldNavigationDelegate
+        self.navigator.popDelegate()
 
         if let oldTop {
             self.navigator.popToViewController(oldTop, animated: true) { [weak self] in
@@ -382,7 +380,7 @@ extension EditRecipeStepSupervisor: UINavigationControllerDelegate {
             .viewControllers
             .contains(where: { $0 === container }) {
             self.endSelf()
-            self.oldNavigationDelegate?.navigationController?(
+            navigationController.delegate?.navigationController?(
                 navigationController,
                 didShow: viewController,
                 animated: animated

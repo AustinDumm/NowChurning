@@ -12,7 +12,7 @@ import XCTest
 final class InventorySupervisorTests: SupervisorTests {
 
     var parent: ParentSupervisorMock!
-    var navigator: UINavigationController!
+    var navigator: StackNavigation!
 
     override func setUpWithError() throws {
         try super.setUpWithError()
@@ -107,7 +107,7 @@ final class InventorySupervisorTests: SupervisorTests {
 
     func testSupervisor_WhenNavigationBack_DoesEndSelf() throws {
         let delegate = MockUINavigationControllerDelegate()
-        self.navigator.delegate = delegate
+        self.navigator.pushDelegate(delegate)
 
         let supervisor = InventorySupervisor(
             parent: self.parent,

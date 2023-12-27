@@ -12,7 +12,7 @@ import XCTest
 final class MyRecipesSupervisorTests: SupervisorTests {
 
     var parent: MyRecipesSupervisorParentMock!
-    var navigator: UINavigationController!
+    var navigator: StackNavigation!
 
     override func setUpWithError() throws {
         try super.setUpWithError()
@@ -118,7 +118,7 @@ final class MyRecipesSupervisorTests: SupervisorTests {
 
     func testSupervisor_WhenNavigationBack_EndsSelf() throws {
         let delegate = MockUINavigationControllerDelegate()
-        self.navigator.delegate = delegate
+        self.navigator.pushDelegate(delegate)
 
         let supervisor = RecipesSupervisor(
             parent: self.parent,

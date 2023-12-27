@@ -43,7 +43,7 @@ final class MainFlowSupervisorTests: SupervisorTests {
         supervisor.navigateTo(action: .inventory)
 
         let expectation = XCTestExpectation()
-        DispatchQueue.main.async {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.05) {
             XCTAssert(
                 (self.window.rootViewController as! UINavigationController)
                     .topViewController?

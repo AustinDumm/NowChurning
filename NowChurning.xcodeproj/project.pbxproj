@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F66E9F552B3BA6BE00311359 /* StackNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F66E9F542B3BA6BE00311359 /* StackNavigation.swift */; };
 		F693343C2B1A55550049A997 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F693343B2B1A55550049A997 /* ViewController.swift */; };
 		F693343F2B1A55550049A997 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F693343D2B1A55550049A997 /* Main.storyboard */; };
 		F69334472B1A55560049A997 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F69334452B1A55560049A997 /* LaunchScreen.storyboard */; };
@@ -252,6 +253,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F66E9F542B3BA6BE00311359 /* StackNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StackNavigation.swift; sourceTree = "<group>"; };
 		F69334342B1A55550049A997 /* NowChurning.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NowChurning.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F693343B2B1A55550049A997 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		F693343E2B1A55550049A997 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -509,6 +511,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F66E9F532B3BA6B100311359 /* Navigation */ = {
+			isa = PBXGroup;
+			children = (
+				F66E9F542B3BA6BE00311359 /* StackNavigation.swift */,
+			);
+			path = Navigation;
+			sourceTree = "<group>";
+		};
 		F693342B2B1A55550049A997 = {
 			isa = PBXGroup;
 			children = (
@@ -1379,6 +1389,7 @@
 		F69335442B1A55770049A997 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F66E9F532B3BA6B100311359 /* Navigation */,
 				F69335452B1A55770049A997 /* FormList */,
 				F69335492B1A55770049A997 /* TileCollection */,
 				F693354E2B1A55770049A997 /* ItemList */,
@@ -2389,6 +2400,7 @@
 				F69335FF2B1A56420049A997 /* AppDelegate.swift in Sources */,
 				F69335D32B1A55770049A997 /* NewIngredientFromListStore.swift in Sources */,
 				F69335BA2B1A55770049A997 /* RecipeStepDetailsSupervisor.swift in Sources */,
+				F66E9F552B3BA6BE00311359 /* StackNavigation.swift in Sources */,
 				F69335D12B1A55770049A997 /* CDRecipeStep+CoreDataClass.swift in Sources */,
 				F69335752B1A55770049A997 /* RecipeDetailsDomainBoundary.swift in Sources */,
 				F69335C62B1A55770049A997 /* CDIngredient+CoreDataClass.swift in Sources */,
