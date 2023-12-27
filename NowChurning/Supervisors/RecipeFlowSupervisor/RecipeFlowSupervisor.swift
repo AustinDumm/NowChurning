@@ -370,5 +370,17 @@ extension RecipeFlowSupervisor: StackNavigationDelegate {
 }
 
 extension RecipeFlowSupervisor: UIAdaptivePresentationControllerDelegate {
-    // TODO: Implement swipe down support
+    func presentationControllerDidDismiss(
+        _ presentationController: UIPresentationController
+    ) {
+        switch self.state {
+        case .none:
+            break
+        case .recipeDetails, .stepPreview, .editStep:
+            // These states are not handled in modal sheets
+            break
+        case .addStep(let supervisorPair, _):
+            self.state = .recipeDetails(supervisorPair)
+        }
+    }
 }
