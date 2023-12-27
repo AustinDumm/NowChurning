@@ -106,7 +106,7 @@ final class InventorySupervisorTests: SupervisorTests {
     }
 
     func testSupervisor_WhenNavigationBack_DoesEndSelf() throws {
-        let delegate = MockUINavigationControllerDelegate()
+        let delegate = MockStackNavigationDelegate()
         self.navigator.pushDelegate(delegate)
 
         let supervisor = InventorySupervisor(
@@ -139,7 +139,7 @@ final class InventorySupervisorTests: SupervisorTests {
                 )
 
             XCTAssertIdentical(
-                self.navigator.delegate,
+                self.navigator.topDelegate,
                 delegate
             )
         }

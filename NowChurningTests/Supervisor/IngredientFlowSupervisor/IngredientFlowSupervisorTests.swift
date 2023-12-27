@@ -43,7 +43,7 @@ final class IngredientFlowSupervisorTests: SupervisorTests {
         )
 
         let expectation = XCTestExpectation()
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) {
             XCTAssert(
                 self.navigator
                     .topViewController?
@@ -143,7 +143,7 @@ final class IngredientFlowSupervisorTests: SupervisorTests {
     }
 
     func testSupervisor_WhenNavigationBack_AlertsParent() throws {
-        let delegate = MockUINavigationControllerDelegate()
+        let delegate = MockStackNavigationDelegate()
         self.navigator.pushDelegate(delegate)
         
         let supervisor = IngredientFlowSupervisor(
@@ -176,7 +176,7 @@ final class IngredientFlowSupervisorTests: SupervisorTests {
                 )
 
             XCTAssertIdentical(
-                self.navigator.delegate,
+                self.navigator.topDelegate,
                 delegate
             )
         }

@@ -72,10 +72,10 @@ class IngredientFlowSupervisor: NSObject, Supervisor {
             ), container)
         )
 
-        self.navigator.pushDelegate(self)
         self.navigator
             .pushViewController(
                 container,
+                withAssociatedNavigationDelegate: self,
                 animated: true
             )
     }
@@ -111,7 +111,6 @@ class IngredientFlowSupervisor: NSObject, Supervisor {
     }
 
     private func endSelf() {
-        self.navigator.popDelegate()
         self.parent?
             .childDidEnd(supervisor: self)
     }
@@ -259,23 +258,9 @@ extension IngredientFlowSupervisor: TagSelectorSupervisorParent {
     }
 }
 
-extension IngredientFlowSupervisor: UINavigationControllerDelegate {
-    func navigationController(
-        _ navigationController: UINavigationController,
-        didShow viewController: UIViewController,
-        animated: Bool
-    ) {
-        if let detailsViewController,
-           !navigationController
-            .viewControllers
-            .contains(detailsViewController) {
-            self.endSelf()
-            navigationController.delegate?.navigationController?(
-                navigationController,
-                didShow: viewController,
-                animated: animated
-            )
-        }
+extension IngredientFlowSupervisor: StackNavigationDelegate {
+    func didDisconnectDelegate(fromNavigationController: StackNavigation) {
+        self.endSelf()
     }
 }
 

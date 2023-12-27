@@ -81,10 +81,10 @@ class StorelessMeasureFlowSupervisor: NSObject, Supervisor {
             (supervisor, container)
         )
 
-        self.navigator.pushDelegate(self)
         self.navigator
             .pushViewController(
                 container,
+                withAssociatedNavigationDelegate: self,
                 animated: true,
                 completion: completion
             )
@@ -116,22 +116,15 @@ class StorelessMeasureFlowSupervisor: NSObject, Supervisor {
 
             fallthrough
         case .measureDetails(let (supervisor, _)):
-            supervisor.requestEnd { [weak self] in
-                self?.navigator.popDelegate()
-                onEnd()
-            }
+            supervisor.requestEnd(onEnd: onEnd)
         case .measurementEdit(_, let supervisor):
-            return supervisor.requestEnd { [weak self] in
-                self?.navigator.popDelegate()
-                onEnd()
-            }
+            supervisor.requestEnd(onEnd: onEnd)
         case .none:
             break
         }
     }
 
     private func endSelf() {
-        self.navigator.popDelegate()
         self.parent?
             .childDidEnd(supervisor: self)
     }
@@ -331,23 +324,9 @@ extension StorelessMeasureFlowSupervisor: TagSelectorSupervisorParent {
     }
 }
 
-extension StorelessMeasureFlowSupervisor: UINavigationControllerDelegate {
-    func navigationController(
-        _ navigationController: UINavigationController,
-        didShow viewController: UIViewController,
-        animated: Bool
-    ) {
-        if let detailsViewController,
-           !navigationController
-            .viewControllers
-            .contains(detailsViewController) {
-            self.endSelf()
-            navigationController.delegate?.navigationController?(
-                navigationController,
-                didShow: viewController,
-                animated: animated
-            )
-        }
+extension StorelessMeasureFlowSupervisor: StackNavigationDelegate {
+    func didDisconnectDelegate(fromNavigationController: StackNavigation) {
+        self.endSelf()
     }
 }
 

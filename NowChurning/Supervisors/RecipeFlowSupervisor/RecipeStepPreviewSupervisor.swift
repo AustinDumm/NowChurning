@@ -375,7 +375,11 @@ extension RecipeStepPreviewSupervisor: IngredientFlowSupervisorParent {
     func navigate(forEditDoneType doneType: EditModeAction.DoneType) {}
 }
 
-extension RecipeStepPreviewSupervisor: UINavigationControllerDelegate {
+extension RecipeStepPreviewSupervisor: StackNavigationDelegate {
+    func didDisconnectDelegate(fromNavigationController: StackNavigation) {
+        self.endSelf()
+    }
+
     func navigationController(
         _ navigationController: UINavigationController,
         didShow viewController: UIViewController,
@@ -388,10 +392,7 @@ extension RecipeStepPreviewSupervisor: UINavigationControllerDelegate {
                 .measurePreview,
                 .tagIngredientPreview,
                 .none:
-            if navigationController.viewControllers.count == 0 {
-                self.endSelf()
-            }
-
+            break
         case .tagMeasurePreview(
             let tagFiltered,
             (_, _, let container)

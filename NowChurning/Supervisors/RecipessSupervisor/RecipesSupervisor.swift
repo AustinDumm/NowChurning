@@ -80,8 +80,6 @@ class RecipesSupervisor: NSObject {
 
         super.init()
 
-        self.navigator.pushDelegate(self)
-
         let container = UIViewController()
         container.navigationItem.largeTitleDisplayMode = .never
         guard let supervisor = RecipeListSupervisor(
@@ -97,8 +95,11 @@ class RecipesSupervisor: NSObject {
             (supervisor, container)
         )
 
-        self.navigator
-            .pushViewController(container, animated: true)
+        self.navigator.pushViewController(
+            container,
+            withAssociatedNavigationDelegate: self,
+            animated: true
+        )
     }
 
     private func errorExit(_ error: AppError) {
@@ -120,7 +121,6 @@ class RecipesSupervisor: NSObject {
         UINavigationBar.appearance().tintColor = self.oldAccent
         self.navigator.view.tintColor = self.oldAccent
         self.navigator.navigationBar.tintColor = self.oldAccent
-        self.navigator.popDelegate()
         self.parent?.childDidEnd(supervisor: self)
     }
 }
@@ -304,29 +304,9 @@ extension RecipesSupervisor: RecipeFlowSupervisorParent {
     }
 }
 
-extension RecipesSupervisor: UINavigationControllerDelegate {
-    func navigationController(
-        _ navigationController: UINavigationController,
-        didShow viewController: UIViewController,
-        animated: Bool
-    ) {
-        switch self.state {
-        case .myRecipes((_, let container)),
-                .recipeDetails((_, let container), _),
-                .addRecipe((_, let container), _):
-            if !navigationController
-                .viewControllers
-                .contains(container) {
-                self.endSelf()
-                navigationController.delegate?.navigationController?(
-                    navigationController,
-                    didShow: viewController,
-                    animated: animated
-                )
-            }
-        case .none:
-            break
-        }
+extension RecipesSupervisor: StackNavigationDelegate {
+    func didDisconnectDelegate(fromNavigationController: StackNavigation) {
+        self.endSelf()
     }
 }
 

@@ -229,7 +229,7 @@
 		F69336C92B1A56C70049A997 /* AutoMockable.generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69336862B1A56C70049A997 /* AutoMockable.generated.swift */; };
 		F69336CA2B1A56C70049A997 /* TagSelectorDisplayModelSinkMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69336882B1A56C70049A997 /* TagSelectorDisplayModelSinkMock.swift */; };
 		F69336CB2B1A56C70049A997 /* TagSelectorNavigationDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F69336892B1A56C70049A997 /* TagSelectorNavigationDelegateMock.swift */; };
-		F69336CC2B1A56C70049A997 /* MockUINavigationControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F693368A2B1A56C70049A997 /* MockUINavigationControllerDelegate.swift */; };
+		F69336CC2B1A56C70049A997 /* MockStackNavigationDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F693368A2B1A56C70049A997 /* MockStackNavigationDelegate.swift */; };
 		F69336D02B1A57910049A997 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = F69336CF2B1A57910049A997 /* Factory */; };
 		F69336D92B1A5E8D0049A997 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = F69336D82B1A5E8D0049A997 /* .swiftlint.yml */; };
 		F69336DA2B1A60CB0049A997 /* NowChurning.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F69336D32B1A5B250049A997 /* NowChurning.xcdatamodeld */; };
@@ -480,7 +480,7 @@
 		F69336862B1A56C70049A997 /* AutoMockable.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoMockable.generated.swift; sourceTree = "<group>"; };
 		F69336882B1A56C70049A997 /* TagSelectorDisplayModelSinkMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagSelectorDisplayModelSinkMock.swift; sourceTree = "<group>"; };
 		F69336892B1A56C70049A997 /* TagSelectorNavigationDelegateMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TagSelectorNavigationDelegateMock.swift; sourceTree = "<group>"; };
-		F693368A2B1A56C70049A997 /* MockUINavigationControllerDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockUINavigationControllerDelegate.swift; sourceTree = "<group>"; };
+		F693368A2B1A56C70049A997 /* MockStackNavigationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockStackNavigationDelegate.swift; sourceTree = "<group>"; };
 		F69336D42B1A5B250049A997 /* NowPouring.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NowPouring.xcdatamodel; sourceTree = "<group>"; };
 		F69336D82B1A5E8D0049A997 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -2086,7 +2086,7 @@
 			children = (
 				F69336882B1A56C70049A997 /* TagSelectorDisplayModelSinkMock.swift */,
 				F69336892B1A56C70049A997 /* TagSelectorNavigationDelegateMock.swift */,
-				F693368A2B1A56C70049A997 /* MockUINavigationControllerDelegate.swift */,
+				F693368A2B1A56C70049A997 /* MockStackNavigationDelegate.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -2455,7 +2455,7 @@
 				F69336BD2B1A56C70049A997 /* MockMainScreenAppNavDelegate.swift in Sources */,
 				F69336A92B1A56C70049A997 /* TestAppContent.swift in Sources */,
 				F693369C2B1A56C70049A997 /* RecipeListStaticMemoryStoreTests.swift in Sources */,
-				F69336CC2B1A56C70049A997 /* MockUINavigationControllerDelegate.swift in Sources */,
+				F69336CC2B1A56C70049A997 /* MockStackNavigationDelegate.swift in Sources */,
 				F69336942B1A56C70049A997 /* IngredientListCoreDataStoreTests.swift in Sources */,
 				F69336AE2B1A56C70049A997 /* IngredientListSupervisorTests.swift in Sources */,
 				F69336CB2B1A56C70049A997 /* TagSelectorNavigationDelegateMock.swift in Sources */,

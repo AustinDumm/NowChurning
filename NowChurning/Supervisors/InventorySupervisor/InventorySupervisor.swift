@@ -79,8 +79,6 @@ class InventorySupervisor: NSObject {
     }
 
     func start() -> Bool {
-        self.navigator.pushDelegate(self)
-
         let container = UIViewController()
         guard let supervisor = MeasureListSupervisor(
             container: container,
@@ -96,13 +94,15 @@ class InventorySupervisor: NSObject {
         )
 
         container.navigationItem.largeTitleDisplayMode = .never
-        self.navigator
-            .pushViewController(container, animated: true)
+        self.navigator.pushViewController(
+            container,
+            withAssociatedNavigationDelegate: self,
+            animated: true
+        )
         return true
     }
 
     func startEdit(ingredient: Ingredient) -> Bool {
-        self.navigator.pushDelegate(self)
         let listContainer = UIViewController()
         listContainer.navigationItem.largeTitleDisplayMode = .never
         guard
@@ -127,9 +127,11 @@ class InventorySupervisor: NSObject {
         ) { [weak self] in
             guard let self else { return }
 
-            var viewControllers = self.navigator.viewControllers
-            viewControllers.insert(listContainer, at: listInsertIndex)
-            self.navigator.setViewControllers(viewControllers, animated: false)
+            self.navigator.insertViewController(
+                listContainer,
+                atStackIndex: listInsertIndex,
+                withAssociatedNavigationDelegate: self
+            )
         }
 
         self.state = .measureDetails(
@@ -141,8 +143,6 @@ class InventorySupervisor: NSObject {
     }
 
     func startAdd(ingredient: Ingredient) -> Bool {
-        self.navigator.pushDelegate(self)
-
         let listContainer = UIViewController()
         listContainer.navigationItem.largeTitleDisplayMode = .never
         guard
@@ -171,12 +171,14 @@ class InventorySupervisor: NSObject {
         )
         self.navigator.pushViewController(
             listContainer,
-            animated: true) { [weak self] in
-                self?.navigator.present(
-                    modalNavigation,
-                    animated: true
-                )
-            }
+            withAssociatedNavigationDelegate: self,
+            animated: true
+        ) { [weak self] in
+            self?.navigator.present(
+                modalNavigation,
+                animated: true
+            )
+        }
 
         return true
     }
@@ -200,7 +202,6 @@ class InventorySupervisor: NSObject {
         UINavigationBar.appearance().tintColor = self.oldAccent
         self.navigator.navigationBar.tintColor = self.oldAccent
         self.navigator.navigationBar.tintColor = self.oldAccent
-        self.navigator.popDelegate()
         self.parent?.childDidEnd(supervisor: self)
     }
 }
@@ -343,29 +344,9 @@ extension InventorySupervisor: MeasureListSupervisorParent {
     }
 }
 
-extension InventorySupervisor: UINavigationControllerDelegate {
-    func navigationController(
-        _ navigationController: UINavigationController,
-        didShow viewController: UIViewController,
-        animated: Bool
-    ) {
-        switch self.state {
-        case .inventoryList((_, let container)),
-                .measureDetails((_, let container), _),
-                .addMeasure((_, let container), _):
-            if !navigationController
-                .viewControllers
-                .contains(container) {
-                self.endSelf()
-                navigationController.delegate?.navigationController?(
-                    navigationController,
-                    didShow: viewController,
-                    animated: animated
-                )
-            }
-        case .none:
-            break
-        }
+extension InventorySupervisor: StackNavigationDelegate {
+    func didDisconnectDelegate(fromNavigationController: StackNavigation) {
+        self.endSelf()
     }
 }
 

@@ -82,10 +82,10 @@ class MeasureFlowSupervisor: NSObject, Supervisor {
             (supervisor, container)
         )
 
-        self.navigator.pushDelegate(self)
         self.navigator
             .pushViewController(
                 container,
+                withAssociatedNavigationDelegate: self,
                 animated: true,
                 completion: completion
             )
@@ -126,7 +126,6 @@ class MeasureFlowSupervisor: NSObject, Supervisor {
     }
 
     private func endSelf() {
-        self.navigator.popDelegate()
         self.parent?
             .childDidEnd(supervisor: self)
     }
@@ -310,23 +309,9 @@ extension MeasureFlowSupervisor: TagSelectorSupervisorParent {
     }
 }
 
-extension MeasureFlowSupervisor: UINavigationControllerDelegate {
-    func navigationController(
-        _ navigationController: UINavigationController,
-        didShow viewController: UIViewController,
-        animated: Bool
-    ) {
-        if let detailsViewController,
-           !navigationController
-            .viewControllers
-            .contains(detailsViewController) {
-            self.endSelf()
-            navigationController.delegate?.navigationController?(
-                navigationController,
-                didShow: viewController,
-                animated: animated
-            )
-        }
+extension MeasureFlowSupervisor: StackNavigationDelegate {
+    func didDisconnectDelegate(fromNavigationController: StackNavigation) {
+        self.endSelf()
     }
 }
 

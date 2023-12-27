@@ -85,10 +85,10 @@ class RecipeFlowSupervisor: NSObject, Supervisor {
             ), container)
         )
 
-        self.navigator.pushDelegate(self)
         self.navigator
             .pushViewController(
                 container,
+                withAssociatedNavigationDelegate: self,
                 animated: true
             )
     }
@@ -177,7 +177,6 @@ class RecipeFlowSupervisor: NSObject, Supervisor {
     }
 
     private func endSelf() {
-        self.navigator.popDelegate()
         self.parent?.childDidEnd(supervisor: self)
     }
 }
@@ -364,27 +363,9 @@ extension RecipeFlowSupervisor: EditRecipeStepSupervisorParent {
     }
 }
 
-extension RecipeFlowSupervisor: UINavigationControllerDelegate {
-    func navigationController(
-        _ navigationController: UINavigationController,
-        didShow viewController: UIViewController,
-        animated: Bool
-    ) {
-        guard let recipeContainer else {
-            self.handle(error: .recipeFlowEndStateFailure)
-            return
-        }
-
-        if !navigationController
-            .viewControllers
-            .contains(recipeContainer) {
-            self.endSelf()
-            navigationController.delegate?.navigationController?(
-                navigationController,
-                didShow: viewController,
-                animated: animated
-            )
-        }
+extension RecipeFlowSupervisor: StackNavigationDelegate {
+    func didDisconnectDelegate(fromNavigationController: StackNavigation) {
+        self.endSelf()
     }
 }
 

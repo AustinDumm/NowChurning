@@ -81,8 +81,11 @@ class EditRecipeStepSupervisor: NSObject, Supervisor {
         super.init()
 
         supervisor.parent = self
-        self.navigator.pushViewController(container, animated: true)
-        self.navigator.pushDelegate(self)
+        self.navigator.pushViewController(
+            container,
+            withAssociatedNavigationDelegate: self,
+            animated: true
+        )
     }
 
     func canEnd() -> Bool {
@@ -106,8 +109,6 @@ class EditRecipeStepSupervisor: NSObject, Supervisor {
     }
 
     private func endSelf() {
-        self.navigator.popDelegate()
-
         if let oldTop {
             self.navigator.popToViewController(oldTop, animated: true) { [weak self] in
                 guard let self else { return }
@@ -360,31 +361,8 @@ extension EditRecipeStepSupervisor: UIAdaptivePresentationControllerDelegate {
     }
 }
 
-extension EditRecipeStepSupervisor: UINavigationControllerDelegate {
-    func navigationController(
-        _ navigationController: UINavigationController,
-        didShow viewController: UIViewController,
-        animated: Bool
-    ) {
-        let container: UIViewController
-        switch self.state {
-        case .recipeStep((_, let viewController)):
-            container = viewController
-
-        case .pickIngredient, .pickTags, .editMeasurement:
-            // Presented modally, not through NavController
-            return
-        }
-
-        if !navigationController
-            .viewControllers
-            .contains(where: { $0 === container }) {
-            self.endSelf()
-            navigationController.delegate?.navigationController?(
-                navigationController,
-                didShow: viewController,
-                animated: animated
-            )
-        }
+extension EditRecipeStepSupervisor: StackNavigationDelegate {
+    func didDisconnectDelegate(fromNavigationController: StackNavigation) {
+        self.endSelf()
     }
 }

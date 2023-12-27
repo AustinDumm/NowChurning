@@ -93,6 +93,7 @@ class AddRecipeStepSupervisor: NSObject, Supervisor {
 
         self.navigator.pushViewController(
             typeSelectController,
+            withAssociatedNavigationDelegate: self,
             animated: true
         )
 
@@ -112,7 +113,6 @@ class AddRecipeStepSupervisor: NSObject, Supervisor {
         ))
 
         self.stateStack.append(.typeSelect(typeSelectController, navBarManager))
-        self.navigator.pushDelegate(self)
     }
 
     func canEnd() -> Bool {
@@ -124,7 +124,6 @@ class AddRecipeStepSupervisor: NSObject, Supervisor {
     }
 
     private func endSelf() {
-        self.navigator.popDelegate()
         self.parent?.childDidEnd(supervisor: self)
     }
 }
@@ -430,7 +429,11 @@ extension AddRecipeStepSupervisor: InstructionEntrySupervisorParent {
     }
 }
 
-extension AddRecipeStepSupervisor: UINavigationControllerDelegate {
+extension AddRecipeStepSupervisor: StackNavigationDelegate {
+    func didDisconnectDelegate(fromNavigationController: StackNavigation) {
+        self.endSelf()
+    }
+    
     func navigationController(
         _ navigationController: UINavigationController,
         didShow viewController: UIViewController,
@@ -453,15 +456,6 @@ extension AddRecipeStepSupervisor: UINavigationControllerDelegate {
             .viewControllers
             .contains(expectedController) {
             _ = self.stateStack.popLast()
-
-            if self.stateStack.isEmpty {
-                self.endSelf()
-                navigationController.delegate?.navigationController?(
-                    navigationController,
-                    didShow: viewController,
-                    animated: animated
-                )
-            }
         }
     }
 }
