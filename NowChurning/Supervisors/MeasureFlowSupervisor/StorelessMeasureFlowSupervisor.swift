@@ -72,7 +72,7 @@ class StorelessMeasureFlowSupervisor: NSObject, Supervisor {
             container: container,
             navigationItem: container.navigationItem,
             measure: measure,
-            listStore: self,
+            listStore: WeakSelf(self),
             parent: self,
             content: content.detailsContent
         )
@@ -131,6 +131,22 @@ class StorelessMeasureFlowSupervisor: NSObject, Supervisor {
 }
 
 extension StorelessMeasureFlowSupervisor: MeasureListStoreActionSink {
+    private class WeakSelf: MeasureListStoreActionSink {
+        weak var weakSelf: StorelessMeasureFlowSupervisor?
+
+        init(_ weakSelf: StorelessMeasureFlowSupervisor) {
+            self.weakSelf = weakSelf
+        }
+
+        func send(action: MeasureListStoreAction) {
+            self.weakSelf?.send(action: action)
+        }
+
+        func registerSink(asWeak sink: MeasureListDomainModelSink) {
+            self.weakSelf?.registerSink(asWeak: sink)
+        }
+    }
+
     func send(action: MeasureListStoreAction) {
         switch action {
         case .save(let measures, _):

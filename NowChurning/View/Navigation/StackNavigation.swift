@@ -70,10 +70,6 @@ class StackNavigation: UINavigationController {
         )
     }
 
-    private func popDelegate() {
-        _ = self.delegateStack.popLast()
-    }
-
     func pushViewController(
         _ viewController: UIViewController,
         withAssociatedNavigationDelegate associatedNavigationDelegate: StackNavigationDelegate? = nil,
@@ -99,6 +95,7 @@ class StackNavigation: UINavigationController {
     ) {
 #if !DEBUG
         // Only protect against this out of bounds on release builds
+        // On debug builds, let the out of bounds crash
         guard self.viewControllers.indices.contains(stackIndex) else {
             return
         }
@@ -167,7 +164,8 @@ extension StackNavigation: UINavigationControllerDelegate {
 
         if let activeDelegate = self.delegateStack.last,
            let expectedViewController = activeDelegate.attachedViewController,
-           expectedViewController !== navigationController.viewControllers[safe: activeDelegate.attachedStackIndex] {
+           expectedViewController !== navigationController.viewControllers[safe: activeDelegate.attachedStackIndex] || activeDelegate.delegate
+         == nil {
             // View stack has popped off the view at the delegate's attached index or
             // the view at the attached index is no longer the attached view.
             // The active delegate should no longer be connected to this navigation controller
