@@ -66,6 +66,54 @@ extension RecipeListCoreDataStore {
             tags: [tags.flavoring, tags.fruit]
         )
 
+        let cocoaPowder = Ingredient(
+            name: "Unsweetened Cocoa Powder",
+            description: "",
+            tags: [tags.chocolate, tags.flavoring]
+        )
+
+        let dutchCocoaPowder = Ingredient(
+            name: "Dutch Process Cocoa Powder",
+            description: "",
+            tags: [tags.chocolate, tags.flavoring]
+        )
+
+        let basil = Ingredient(
+            name: "Basil Leaves",
+            description: "",
+            tags: [tags.floral, tags.flavoring]
+        )
+
+        let water = Ingredient(
+            name: "Water",
+            description: "",
+            tags: []
+        )
+
+        let butter = Ingredient(
+            name: "Butter",
+            description: "",
+            tags: [tags.dairy]
+        )
+
+        let miniPeanutButterCups = Ingredient(
+            name: "Mini Peanut Butter Cups",
+            description: "",
+            tags: [tags.candy, tags.mixin]
+        )
+
+        let lightCornSyrup = Ingredient(
+            name: "Light Corn Syrup",
+            description: "",
+            tags: [tags.sweetener]
+        )
+
+        let toffeeBar = Ingredient(
+            name: "Toffee Nut Candy Bar",
+            description: "",
+            tags: [tags.candy, tags.mixin]
+        )
+
         return [
             .init(
                 name: "Custard Base",
@@ -149,6 +197,93 @@ extension RecipeListCoreDataStore {
                         measure: .volume(.init(value: 0.5, unit: .cups))
                     )),
                     .instruction("Chop the fresh strawberries and serve as garnish over the fresh ice cream or mixed into the ice cream near the end of the churning for fully frozen ice cream.")
+                ])
+            ),
+            .init(
+                name: "Chocolate Ice Cream",
+                description: "Classic base extension to traditional ice cream. Perfect on its own or with mixins.",
+                recipeDetails: .init(steps: [
+                    .instruction("1 Recipe of the Custard Base"),
+                    .ingredient(.init(
+                        ingredient: cocoaPowder,
+                        measure: .volume(.init(value: 0.5, unit: .cups))
+                    )),
+                    .instruction("Add the cocoa powder gradually to the dairy while heating before continuing with the custard base recipe.")
+                ])
+            ),
+            .init(
+                name: "Basil Ice Cream",
+                description: "Italian herbal ice cream, perfect for warm days. Pair with citrus for a refreshing treat.",
+                recipeDetails: .init(steps: [
+                    .instruction("1 Recipe any base ice cream"),
+                    .ingredient(.init(
+                        ingredient: basil,
+                        measure: .count(
+                            .init(value: 0.5, unit: .count),
+                            "Bundle"
+                        ))
+                    ),
+                    .instruction("Blanch the basil in a pot of salited water before squeezing and draining."),
+                    .instruction("Chop or blend the basil and add to the dairy while heating (or let steep in the dairy overnight for a no-cook base). Strain the dairy mix to remove pieces of the basil before continuing with base recipe.")
+                ])
+            ),
+            .init(
+                name: "Salted Candy Swirl",
+                description: "Classic mixin pairings with salted caramel and peanut butter cups.",
+                recipeDetails: .init(steps: [
+                    .instruction("1 Custard Base Recipe"),
+                    .ingredient(.init(
+                        ingredient: water,
+                        measure: .volume(.init(value: 0.25, unit: .cups))
+                    )),
+                    .ingredient(.init(
+                        ingredient: granulatedSugar,
+                        measure: .volume(.init(value: 1.0, unit: .cups))
+                    )),
+                    .ingredient(.init(
+                        ingredient: heavyCream,
+                        measure: .volume(.init(value: 0.5, unit: .cups))
+                    )),
+                    .ingredient(.init(
+                        ingredient: butter,
+                        measure: .volume(.init(value: 0.5, unit: .cups))
+                    )),
+                    .ingredient(.init(
+                        ingredient: salt,
+                        measure: .volume(.init(value: 1.0, unit: .teaspoons))
+                    )),
+                    .instruction("Dissolve the water and sugar over medium heat and boil until it forms a syrup and turns into a light amber color. Remove from heat and slowly whisk in the room temperature heavy cream then butter and sea salt."),
+                    .instruction("Add the peanut butter cups to the churning base ice cream a few minutes before the churn is done."),
+                    .instruction("Fold the cooled caramel sauce into the soft ice cream after taking it out of the machine, before freezing.")
+                ])
+            ),
+            .init(
+                name: "Chocolate Overload",
+                description: "",
+                recipeDetails: .init(steps: [
+                    .instruction("1 Recipe Chocolate Ice Cream Base"),
+                    .ingredient(.init(
+                        ingredient: granulatedSugar,
+                        measure: .volume(.init(value: 0.5, unit: .cups))
+                    )),
+                    .ingredient(.init(
+                        ingredient: lightCornSyrup,
+                        measure: .volume(.init(value: 0.33, unit: .cups))
+                    )),
+                    .ingredient(.init(
+                        ingredient: water,
+                        measure: .volume(.init(value: 0.5, unit: .cups))
+                    )),
+                    .ingredient(.init(
+                        ingredient: dutchCocoaPowder,
+                        measure: .volume(.init(value: 0.5, unit: .cups))
+                    )),
+                    .instruction("Add sugar, corn syrup, water, and cocoa powder into a saucier and whisk over medium heat until bubbling. Let bubble for a minute before letting cool, then refridgerate."),
+                    .ingredient(.init(
+                        ingredient: toffeeBar,
+                        measure: .count(.init(value: 2.0, unit: .count), "Bars")
+                    )),
+                    .instruction("Chop the toffee candy bars and mix into the ice cream during the last few minutes of churning. Fold the fudge swirl into the ice cream after taking it out of the churn before freezing."),
                 ])
             )
         ]

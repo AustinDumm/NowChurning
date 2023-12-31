@@ -208,8 +208,7 @@ final class MeasureFlowSupervisorTests: SupervisorTests {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
             _ = self.navigator.popViewController(animated: false)
             self.navigator
-                .delegate?
-                .navigationController?(
+                .navigationController(
                     self.navigator,
                     didShow: .init(),
                     animated: false
