@@ -409,8 +409,8 @@ class SegmentedNavigationController: UINavigationController {
 
     /// Inserts a new view controller at the specified index while adjusting the
     /// segment start indicies for all segments above the insertion index. The 
-    /// inserted view controller will be part of the nearest segment below the
-    /// insert index. Insertion will not be animated as it
+    /// inserted view controller will be part of the nearest segment whose root is
+    /// below the insert index. Insertion will not be animated as it
     /// is expected the insertion is not happening at the top of the navigation
     /// stack. If it is happening on the top of the navigation stack, use
     /// ``pushViewController(_:startingNewSegmentWithDelegate:animated:completion:)``.

@@ -195,7 +195,7 @@ final class MeasureFlowSupervisorTests: SupervisorTests {
 
     func test_WhenNavigationPopped_DoesReplaceNavigationDelegate() throws {
         let mockDelegate = MockStackNavigationDelegate()
-        self.navigator.pushDelegate(mockDelegate)
+        self.navigator.startSegment(withDelegate: mockDelegate)
         let supervisor = MeasureFlowSupervisor(
             parent: self.parent,
             navigator: self.navigator,
@@ -217,7 +217,7 @@ final class MeasureFlowSupervisorTests: SupervisorTests {
                 )
 
             XCTAssertIdentical(
-                self.navigator.topDelegate,
+                self.navigator.topSegmentDelegate,
                 mockDelegate
             )
             expectation.fulfill()

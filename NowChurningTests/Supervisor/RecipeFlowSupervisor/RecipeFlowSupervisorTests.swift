@@ -154,7 +154,7 @@ final class RecipeFlowSupervisorTests: SupervisorTests {
 
     func testSupervisor_WhenEndSelf_ReplacesNavigationDelegate() throws {
         let delegate = MockStackNavigationDelegate()
-        self.navigator.pushDelegate(delegate)
+        self.navigator.startSegment(withDelegate: delegate)
 
         let supervisor = RecipeFlowSupervisor(
             parent: self.parent,
@@ -174,7 +174,7 @@ final class RecipeFlowSupervisorTests: SupervisorTests {
             )
 
             XCTAssertIdentical(
-                self.navigator.topDelegate,
+                self.navigator.topSegmentDelegate,
                 delegate
             )
             expectation.fulfill()

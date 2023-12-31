@@ -144,8 +144,8 @@ final class IngredientFlowSupervisorTests: SupervisorTests {
 
     func testSupervisor_WhenNavigationBack_AlertsParent() throws {
         let delegate = MockStackNavigationDelegate()
-        self.navigator.pushDelegate(delegate)
-        
+        self.navigator.startSegment(withDelegate: delegate)
+
         let supervisor = IngredientFlowSupervisor(
             parent: self.parent,
             navigator: self.navigator,
@@ -176,7 +176,7 @@ final class IngredientFlowSupervisorTests: SupervisorTests {
                 )
 
             XCTAssertIdentical(
-                self.navigator.topDelegate,
+                self.navigator.topSegmentDelegate,
                 delegate
             )
         }
