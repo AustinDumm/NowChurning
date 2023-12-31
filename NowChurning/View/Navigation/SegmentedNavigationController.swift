@@ -264,6 +264,13 @@ class SegmentedNavigationController: UINavigationController {
     ///
     /// - Parameter delegate: The delegate to use for this new segment
     func startSegment(withDelegate delegate: SegmentedNavigationControllerDelegate?) {
+        guard !self.viewControllers.isEmpty else {
+            // Empty view stack means that the root segment is below the navigation
+            // stack. Just update that root segment.
+            self.delegateStack[0].delegate = delegate
+            return
+        }
+
         let associatedViewIndex = self.viewControllers.count - 1
         self.delegateStack.append(
             .init(

@@ -143,7 +143,7 @@ final class RecipeFlowSupervisorTests: SupervisorTests {
                 }
 
             _ = self.navigator.popViewController(animated: false)
-            self.navigator.delegate?.navigationController?(
+            self.navigator.navigationController(
                 self.navigator,
                 didShow: UIViewController(),
                 animated: false
@@ -167,7 +167,7 @@ final class RecipeFlowSupervisorTests: SupervisorTests {
         let expectation = XCTestExpectation()
         DispatchQueue.main.async {
             _ = self.navigator.popViewController(animated: false)
-            self.navigator.delegate?.navigationController?(
+            self.navigator.navigationController(
                 self.navigator,
                 didShow: UIViewController(),
                 animated: false

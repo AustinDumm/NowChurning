@@ -168,8 +168,7 @@ final class IngredientFlowSupervisorTests: SupervisorTests {
             self.navigator
                 .popViewController(animated: false)
             self.navigator
-                .delegate?
-                .navigationController?(
+                .navigationController(
                     self.navigator,
                     didShow: .init(),
                     animated: false
