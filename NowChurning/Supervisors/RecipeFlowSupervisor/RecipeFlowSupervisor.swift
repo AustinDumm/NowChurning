@@ -40,7 +40,7 @@ class RecipeFlowSupervisor: NSObject, Supervisor {
     }
 
     private weak var parent: RecipeFlowSupervisorParent?
-    private let navigator: StackNavigation
+    private let navigator: SegmentedNavigationController
     private let topViewController: UIViewController?
 
     private var state: State?
@@ -60,7 +60,7 @@ class RecipeFlowSupervisor: NSObject, Supervisor {
 
     init(
         parent: RecipeFlowSupervisorParent,
-        navigator: StackNavigation,
+        navigator: SegmentedNavigationController,
         recipe: Recipe? = nil,
         recipeListStore: RecipeListCoreDataStore,
         content: Content
@@ -88,7 +88,7 @@ class RecipeFlowSupervisor: NSObject, Supervisor {
         self.navigator
             .pushViewController(
                 container,
-                withAssociatedNavigationDelegate: self,
+                startingNewSegmentWithDelegate: self,
                 animated: true
             )
     }
@@ -264,7 +264,7 @@ extension RecipeFlowSupervisor: RecipeDetailsSupervisorParent {
             return
         }
 
-        let modalNavigation = StackNavigation()
+        let modalNavigation = SegmentedNavigationController()
 
         let addStepSupervisor = AddRecipeStepSupervisor(
             navigator: modalNavigation,
@@ -363,8 +363,8 @@ extension RecipeFlowSupervisor: EditRecipeStepSupervisorParent {
     }
 }
 
-extension RecipeFlowSupervisor: StackNavigationDelegate {
-    func didDisconnectDelegate(fromNavigationController: StackNavigation) {
+extension RecipeFlowSupervisor: SegmentedNavigationControllerDelegate {
+    func didDisconnectDelegate(fromNavigationController: SegmentedNavigationController) {
         self.endSelf()
     }
 }

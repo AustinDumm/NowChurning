@@ -45,12 +45,12 @@ class RecipeStepPreviewSupervisor: NSObject, Supervisor {
 
     private var state: State?
     private let content: Content
-    private let navigator: StackNavigation
-    private var modalNavigator: StackNavigation!
+    private let navigator: SegmentedNavigationController
+    private var modalNavigator: SegmentedNavigationController!
 
     init?(
         parent: RecipeStepPreviewSupervisorParent? = nil,
-        navigator: StackNavigation,
+        navigator: SegmentedNavigationController,
         recipeStep: RecipeDetails.Step,
         content: Content
     ) {
@@ -141,7 +141,7 @@ class RecipeStepPreviewSupervisor: NSObject, Supervisor {
         }
 
         self.modalNavigator.presentationController?.delegate = self
-        self.modalNavigator.pushDelegate(self)
+        self.modalNavigator.startSegment(withDelegate: self)
     }
 
     func canEnd() -> Bool {
@@ -375,8 +375,8 @@ extension RecipeStepPreviewSupervisor: IngredientFlowSupervisorParent {
     func navigate(forEditDoneType doneType: EditModeAction.DoneType) {}
 }
 
-extension RecipeStepPreviewSupervisor: StackNavigationDelegate {
-    func didDisconnectDelegate(fromNavigationController: StackNavigation) {
+extension RecipeStepPreviewSupervisor: SegmentedNavigationControllerDelegate {
+    func didDisconnectDelegate(fromNavigationController: SegmentedNavigationController) {
         self.endSelf()
     }
 

@@ -38,7 +38,7 @@ class MeasureFlowSupervisor: NSObject, Supervisor {
         )
     }
     weak var parent: MeasureFlowSupervisorParent?
-    private let navigator: StackNavigation
+    private let navigator: SegmentedNavigationController
 
     private var state: State?
     private let content: Content
@@ -56,7 +56,7 @@ class MeasureFlowSupervisor: NSObject, Supervisor {
 
     init(
         parent: MeasureFlowSupervisorParent? = nil,
-        navigator: StackNavigation,
+        navigator: SegmentedNavigationController,
         measure: InitialMeasureType,
         measureStore: StockedMeasureListCoreDataStore,
         content: Content,
@@ -85,7 +85,7 @@ class MeasureFlowSupervisor: NSObject, Supervisor {
         self.navigator
             .pushViewController(
                 container,
-                withAssociatedNavigationDelegate: self,
+                startingNewSegmentWithDelegate: self,
                 animated: true,
                 completion: completion
             )
@@ -309,8 +309,8 @@ extension MeasureFlowSupervisor: TagSelectorSupervisorParent {
     }
 }
 
-extension MeasureFlowSupervisor: StackNavigationDelegate {
-    func didDisconnectDelegate(fromNavigationController: StackNavigation) {
+extension MeasureFlowSupervisor: SegmentedNavigationControllerDelegate {
+    func didDisconnectDelegate(fromNavigationController: SegmentedNavigationController) {
         self.endSelf()
     }
 }

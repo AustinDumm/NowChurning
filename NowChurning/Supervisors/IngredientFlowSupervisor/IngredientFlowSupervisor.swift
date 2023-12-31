@@ -30,7 +30,7 @@ class IngredientFlowSupervisor: NSObject, Supervisor {
         )
     }
     weak var parent: IngredientFlowSupervisorParent?
-    private let navigator: StackNavigation
+    private let navigator: SegmentedNavigationController
 
     private var state: State?
     private let content: Content
@@ -47,7 +47,7 @@ class IngredientFlowSupervisor: NSObject, Supervisor {
 
     init(
         parent: IngredientFlowSupervisorParent? = nil,
-        navigator: StackNavigation,
+        navigator: SegmentedNavigationController,
         ingredient: Ingredient? = nil,
         ingredientStore: IngredientListStoreActionSink,
         content: Content
@@ -75,7 +75,7 @@ class IngredientFlowSupervisor: NSObject, Supervisor {
         self.navigator
             .pushViewController(
                 container,
-                withAssociatedNavigationDelegate: self,
+                startingNewSegmentWithDelegate: self,
                 animated: true
             )
     }
@@ -178,7 +178,7 @@ extension IngredientFlowSupervisor: IngredientDetailsSupervisorParent {
 
     func navigateToTagSelector(forIngredient ingredient: Ingredient) {
         let container = UIViewController()
-        let modalNavigation = StackNavigation(rootViewController: container)
+        let modalNavigation = SegmentedNavigationController(rootViewController: container)
 
         guard
             case .ingredientDetails(
@@ -258,8 +258,8 @@ extension IngredientFlowSupervisor: TagSelectorSupervisorParent {
     }
 }
 
-extension IngredientFlowSupervisor: StackNavigationDelegate {
-    func didDisconnectDelegate(fromNavigationController: StackNavigation) {
+extension IngredientFlowSupervisor: SegmentedNavigationControllerDelegate {
+    func didDisconnectDelegate(fromNavigationController: SegmentedNavigationController) {
         self.endSelf()
     }
 }

@@ -15,7 +15,7 @@ class MainScreenSupervisor: Supervisor {
         let tilesContent: MainScreenApplication.Content
     }
 
-    private let navigator: StackNavigation
+    private let navigator: SegmentedNavigationController
     @Injected(\.managedObjectContext)
         private var managedObjectContext: NSManagedObjectContext
     weak var navigationHandler: MainScreenAppNavDelegate? {
@@ -30,7 +30,7 @@ class MainScreenSupervisor: Supervisor {
     private var ingredientListSupervisor: IngredientListSupervisor?
 
     init(
-        navigator: StackNavigation,
+        navigator: SegmentedNavigationController,
         navigationHandler: MainScreenAppNavDelegate? = nil,
         content: Content
     ) {

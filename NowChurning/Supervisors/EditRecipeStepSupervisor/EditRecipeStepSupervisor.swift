@@ -43,12 +43,12 @@ class EditRecipeStepSupervisor: NSObject, Supervisor {
     private var state: State
 
     private let content: Content
-    private let navigator: StackNavigation
+    private let navigator: SegmentedNavigationController
 
     private let oldTop: UIViewController?
 
     init(
-        navigator: StackNavigation,
+        navigator: SegmentedNavigationController,
         step: RecipeDetails.Step,
         parent: EditRecipeStepSupervisorParent? = nil,
         content: Content
@@ -83,7 +83,7 @@ class EditRecipeStepSupervisor: NSObject, Supervisor {
         supervisor.parent = self
         self.navigator.pushViewController(
             container,
-            withAssociatedNavigationDelegate: self,
+            startingNewSegmentWithDelegate: self,
             animated: true
         )
     }
@@ -361,8 +361,8 @@ extension EditRecipeStepSupervisor: UIAdaptivePresentationControllerDelegate {
     }
 }
 
-extension EditRecipeStepSupervisor: StackNavigationDelegate {
-    func didDisconnectDelegate(fromNavigationController: StackNavigation) {
+extension EditRecipeStepSupervisor: SegmentedNavigationControllerDelegate {
+    func didDisconnectDelegate(fromNavigationController: SegmentedNavigationController) {
         self.endSelf()
     }
 }

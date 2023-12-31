@@ -8,10 +8,10 @@
 import UIKit
 @testable import NowChurning
 
-class MockStackNavigationDelegate: NSObject, StackNavigationDelegate {
-    var didDisconnectDelegateFromNavigationControllerClosure: ((StackNavigation) -> Void)?
+class MockStackNavigationDelegate: NSObject, SegmentedNavigationControllerDelegate {
+    var didDisconnectDelegateFromNavigationControllerClosure: ((SegmentedNavigationController) -> Void)?
     func didDisconnectDelegate(
-        fromNavigationController navigationController: StackNavigation
+        fromNavigationController navigationController: SegmentedNavigationController
     ) {
         self.didDisconnectDelegateFromNavigationControllerClosure?(navigationController)
     }

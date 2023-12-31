@@ -12,7 +12,7 @@ import Factory
 final class MeasureFlowSupervisorTests: SupervisorTests {
 
     var parent: MeasureFlowSupervisorParentMock!
-    var navigator: StackNavigation!
+    var navigator: SegmentedNavigationController!
     var store: StockedMeasureListCoreDataStore!
 
     var testMeasure: Measure {
@@ -37,7 +37,7 @@ final class MeasureFlowSupervisorTests: SupervisorTests {
         try super.setUpWithError()
 
         self.parent = .init()
-        self.navigator = StackNavigation(rootViewController: .init())
+        self.navigator = SegmentedNavigationController(rootViewController: .init())
         self.store = .init(
             domainModelSink: MeasureListDomainModelSinkMock(),
             user: Container.shared.coreDataUserManager().user,

@@ -13,7 +13,7 @@ import Factory
 final class RecipeFlowSupervisorTests: SupervisorTests {
 
     var parent: RecipeFlowSupervisorParentMock!
-    var navigator: StackNavigation!
+    var navigator: SegmentedNavigationController!
     var store: RecipeListCoreDataStore!
 
     var testRecipe: Recipe {
@@ -30,7 +30,7 @@ final class RecipeFlowSupervisorTests: SupervisorTests {
         try super.setUpWithError()
 
         self.parent = .init()
-        self.navigator = StackNavigation(rootViewController: .init())
+        self.navigator = SegmentedNavigationController(rootViewController: .init())
         self.store = .init(
             sink: RecipeListDomainModelSinkMock(),
             storeUser: Container.shared.coreDataUserManager().user,

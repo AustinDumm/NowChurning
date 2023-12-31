@@ -38,7 +38,7 @@ class RecipesSupervisor: NSObject {
 
     weak var parent: RecipesSupervisorParent?
 
-    private let navigator: StackNavigation
+    private let navigator: SegmentedNavigationController
     private let oldAccent: UIColor?
     private let rootTopController: UIViewController?
     private let content: Content
@@ -63,7 +63,7 @@ class RecipesSupervisor: NSObject {
 
     init?(
         parent: RecipesSupervisorParent?,
-        navigator: StackNavigation,
+        navigator: SegmentedNavigationController,
         content: Content
     ) {
         self.parent = parent
@@ -97,7 +97,7 @@ class RecipesSupervisor: NSObject {
 
         self.navigator.pushViewController(
             container,
-            withAssociatedNavigationDelegate: self,
+            startingNewSegmentWithDelegate: self,
             animated: true
         )
     }
@@ -239,7 +239,7 @@ extension RecipesSupervisor: RecipeListSupervisorParent {
         case .myRecipes(
             let recipeListPair
         ):
-            let modalNavigation = StackNavigation()
+            let modalNavigation = SegmentedNavigationController()
             let supervisor = RecipeFlowSupervisor(
                 parent: self,
                 navigator: modalNavigation,
@@ -304,8 +304,8 @@ extension RecipesSupervisor: RecipeFlowSupervisorParent {
     }
 }
 
-extension RecipesSupervisor: StackNavigationDelegate {
-    func didDisconnectDelegate(fromNavigationController: StackNavigation) {
+extension RecipesSupervisor: SegmentedNavigationControllerDelegate {
+    func didDisconnectDelegate(fromNavigationController: SegmentedNavigationController) {
         self.endSelf()
     }
 }

@@ -39,7 +39,7 @@ class MainFlowSupervisor: NSObject, Supervisor {
     @Injected(\.managedObjectContext)
         private var managedObjectContext: NSManagedObjectContext
 
-    private let navigator: StackNavigation
+    private let navigator: SegmentedNavigationController
     private var state: FlowState
 
     private let content: Content
@@ -50,7 +50,7 @@ class MainFlowSupervisor: NSObject, Supervisor {
     ) {
         self.window = window
 
-        self.navigator = StackNavigation()
+        self.navigator = SegmentedNavigationController()
         self.navigator.navigationBar.prefersLargeTitles = true
 
         self.window.rootViewController = self.navigator

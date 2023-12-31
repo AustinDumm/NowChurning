@@ -12,7 +12,7 @@ import XCTest
 final class IngredientFlowSupervisorTests: SupervisorTests {
 
     var parent: IngredientFlowSupervisorParentMock!
-    var navigator: StackNavigation!
+    var navigator: SegmentedNavigationController!
     var store: IngredientListStoreActionSinkMock!
 
     var testIngredient: Ingredient {

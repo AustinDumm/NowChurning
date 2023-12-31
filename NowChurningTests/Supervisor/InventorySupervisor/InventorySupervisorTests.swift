@@ -12,7 +12,7 @@ import XCTest
 final class InventorySupervisorTests: SupervisorTests {
 
     var parent: ParentSupervisorMock!
-    var navigator: StackNavigation!
+    var navigator: SegmentedNavigationController!
 
     override func setUpWithError() throws {
         try super.setUpWithError()

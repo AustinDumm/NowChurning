@@ -38,7 +38,7 @@ class InventorySupervisor: NSObject {
 
     weak var parent: ParentSupervisor?
 
-    private let navigator: StackNavigation
+    private let navigator: SegmentedNavigationController
     private let oldAccent: UIColor?
     private let rootTopController: UIViewController?
 
@@ -63,7 +63,7 @@ class InventorySupervisor: NSObject {
 
     init(
         parent: ParentSupervisor?,
-        navigator: StackNavigation,
+        navigator: SegmentedNavigationController,
         content: Content
     ) {
         self.parent = parent
@@ -96,7 +96,7 @@ class InventorySupervisor: NSObject {
         container.navigationItem.largeTitleDisplayMode = .never
         self.navigator.pushViewController(
             container,
-            withAssociatedNavigationDelegate: self,
+            startingNewSegmentWithDelegate: self,
             animated: true
         )
         return true
@@ -130,7 +130,7 @@ class InventorySupervisor: NSObject {
             self.navigator.insertViewController(
                 listContainer,
                 atStackIndex: listInsertIndex,
-                withAssociatedNavigationDelegate: self
+                startingNewSegmentWithDelegate: self
             )
         }
 
@@ -156,7 +156,7 @@ class InventorySupervisor: NSObject {
             return false
         }
 
-        let modalNavigation = StackNavigation()
+        let modalNavigation = SegmentedNavigationController()
         let addMeasure = AddMeasureFlowSupervisor(
             toAddNewFrom: .existingIngredient(ingredient),
             measureListStore: listSupervisor.listStore,
@@ -171,7 +171,7 @@ class InventorySupervisor: NSObject {
         )
         self.navigator.pushViewController(
             listContainer,
-            withAssociatedNavigationDelegate: self,
+            startingNewSegmentWithDelegate: self,
             animated: true
         ) { [weak self] in
             self?.navigator.present(
@@ -317,7 +317,7 @@ extension InventorySupervisor: MeasureListSupervisorParent {
 
         switch self.state {
         case .inventoryList(let inventoryPair):
-            let modalNavigation = StackNavigation()
+            let modalNavigation = SegmentedNavigationController()
             guard let supervisor = AddMeasureFlowSupervisor(
                 measureListStore: store,
                 parent: self,
@@ -344,8 +344,8 @@ extension InventorySupervisor: MeasureListSupervisorParent {
     }
 }
 
-extension InventorySupervisor: StackNavigationDelegate {
-    func didDisconnectDelegate(fromNavigationController: StackNavigation) {
+extension InventorySupervisor: SegmentedNavigationControllerDelegate {
+    func didDisconnectDelegate(fromNavigationController: SegmentedNavigationController) {
         self.endSelf()
     }
 }
@@ -570,7 +570,7 @@ extension InventorySupervisor: MeasureFlowSupervisorParent, AddMeasureFlowSuperv
                 animated: true
             ) { [weak self] in
                 guard let self else { return }
-                let modalNavigation = StackNavigation()
+                let modalNavigation = SegmentedNavigationController()
                 let addMeasureSupervisor = AddMeasureFlowSupervisor(
                     toAddNewFrom: .existingIngredient(ingredient),
                     measureListStore: store,

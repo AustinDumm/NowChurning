@@ -50,13 +50,13 @@ class AddRecipeStepSupervisor: NSObject, Supervisor {
 
     weak var parent: AddRecipeStepSupervisorParent?
 
-    private let navigator: StackNavigation
+    private let navigator: SegmentedNavigationController
     private let content: Content
 
     private var stateStack = [State]()
 
     init(
-        navigator: StackNavigation,
+        navigator: SegmentedNavigationController,
         parent: AddRecipeStepSupervisorParent? = nil,
         content: Content
     ) {
@@ -93,7 +93,7 @@ class AddRecipeStepSupervisor: NSObject, Supervisor {
 
         self.navigator.pushViewController(
             typeSelectController,
-            withAssociatedNavigationDelegate: self,
+            startingNewSegmentWithDelegate: self,
             animated: true
         )
 
@@ -429,8 +429,8 @@ extension AddRecipeStepSupervisor: InstructionEntrySupervisorParent {
     }
 }
 
-extension AddRecipeStepSupervisor: StackNavigationDelegate {
-    func didDisconnectDelegate(fromNavigationController: StackNavigation) {
+extension AddRecipeStepSupervisor: SegmentedNavigationControllerDelegate {
+    func didDisconnectDelegate(fromNavigationController: SegmentedNavigationController) {
         self.endSelf()
     }
     
