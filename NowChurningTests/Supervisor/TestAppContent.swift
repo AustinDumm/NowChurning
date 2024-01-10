@@ -31,7 +31,7 @@ class TestAppContent {
 
     static let testMainTilesContent = MainScreenApplication.Content(
         inventoryTitle: "Test My Bar",
-        myRecipesTitle: "Test Recipe Recipes"
+        myRecipesTitle: "Test Recipes"
     )
 
     static let testAlertContent = AlertContent(
@@ -162,7 +162,9 @@ class TestAppContent {
         alertContent: testAlertContent,
         emptyListMessage: "Test Empty",
         addNewRecipeText: "Test Add New",
-        editListText: "Test Edit List"
+        editListText: "Test Edit List",
+        exportListText: "Test Export List",
+        exportingListTitle: "Test Export Title"
     )
 
     static let testRecipeApplicationContent = RecipeDetailsApplication.Content(

@@ -36,6 +36,8 @@ struct NavBarViewModel {
         case edit
         case add
         case done
+        case export
+        case exportTextOnly
     }
 
     var title: String

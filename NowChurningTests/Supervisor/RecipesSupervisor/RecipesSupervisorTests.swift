@@ -11,7 +11,7 @@ import XCTest
 
 final class MyRecipesSupervisorTests: SupervisorTests {
 
-    var parent: MyRecipesSupervisorParentMock!
+    var parent: RecipesSupervisorParentMock!
     var navigator: SegmentedNavigationController!
 
     override func setUpWithError() throws {

@@ -11,6 +11,8 @@ protocol RecipeListApplicationDelegate: AnyObject {
     func navigateToDetails(forRecipe: Recipe)
 
     func navigateToAddRecipe()
+
+    func export(recipes: [Recipe])
 }
 
 class RecipeListApplication {
@@ -146,6 +148,7 @@ extension RecipeListApplication: RecipeListActionSink {
             }
 
             self.delegate?.navigateToDetails(forRecipe: model)
+
         case .deleteItem(
             inSection: let section,
             atIndex: let index
@@ -167,9 +170,17 @@ extension RecipeListApplication: RecipeListActionSink {
                 .updateActiveModel { model in
                         model.remove(at: index)
                     }
+
         case .newRecipe:
             self.delegate?
                 .navigateToAddRecipe()
+
+        case .exportRecipes(let exportGroupedIndices):
+            let groupedModel = Self.groupModel(self.editModeHelper.activeModel())
+            let recipesToExport = exportGroupedIndices
+                .compactMap { groupedModel[safe: $0.section]?.1[safe: $0.index] }
+
+            self.delegate?.export(recipes: recipesToExport)
         }
     }
 

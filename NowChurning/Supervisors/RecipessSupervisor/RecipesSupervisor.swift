@@ -262,6 +262,9 @@ extension RecipesSupervisor: RecipeListSupervisorParent {
             self.errorExit(.myRecipesDetailPushStateFailure)
         }
     }
+
+    func export(recipes: [Recipe]) {
+    }
 }
 
 extension RecipesSupervisor: RecipeFlowSupervisorParent {

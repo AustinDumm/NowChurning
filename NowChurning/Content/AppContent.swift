@@ -75,7 +75,9 @@ struct AppContent {
                 alertContent: Self.editCancel,
                 emptyListMessage: "my_recipes_empty_message".localized(),
                 addNewRecipeText: "recipe_list_add_new_recipe".localized(),
-                editListText: "recipe_list_edit_list".localized()
+                editListText: "recipe_list_edit_list".localized(),
+                exportListText: "recipe_list_export_list".localized(),
+                exportingListTitle: "my_recipes_exporting_title".localized()
             ),
             editDetailsContent: .init(
                 recipeDetailsContent: .init(

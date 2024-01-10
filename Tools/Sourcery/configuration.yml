@@ -4,7 +4,7 @@ sources:
 templates:
     - ./Templates
 output:
-    ../../NowPouringTests/Generated
+    ../../NowChurningTests/Generated
 args:
     autoMockableTestableImports:
-        - "NowPouring"
+        - "NowChurning"

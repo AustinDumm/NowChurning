@@ -235,6 +235,11 @@ extension NavBarManager: NavBarViewModelSink {
             button = systemButtonBuilder.doneButton(
                 action: buttonAction
             )
+        case .export, .exportTextOnly:
+            button = .init(
+                title: viewModelButton.displayTitle,
+                primaryAction: buttonAction
+            )
         }
 
         button?.isEnabled = viewModelButton.isEnabled
@@ -255,6 +260,10 @@ extension NavBarManager: NavBarViewModelSink {
             return .init(systemName: "pencil")
         case .add:
             return .init(systemName: "plus")
+        case .export:
+            return .init(systemName: "square.and.arrow.up")
+        case .exportTextOnly:
+            return nil
         case .done:
             return nil
         }
@@ -276,6 +285,8 @@ extension NavBarManager: NavBarViewModelSink {
             return "default_action_name_add".localized()
         case .done:
             return "default_action_name_done".localized()
+        case .export, .exportTextOnly:
+            return "default_action_name_export".localized()
         }
     }
 }

@@ -46,6 +46,7 @@ enum RecipeListAction {
     case selectedItem(inSection: Int, atIndex: Int)
     case deleteItem(inSection: Int, atIndex: Int)
     case newRecipe
+    case exportRecipes([(section: Int, index: Int)])
 }
 
 protocol RecipeListActionSink: AnyObject, EditModeActionSink {

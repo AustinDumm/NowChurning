@@ -369,4 +369,41 @@ final class RecipeListApplicationTests: XCTestCase {
         wait(for: [expectation], timeout: 0.0)
     }
 
+    func testApplication_WhenExportRecipes_SendsNavigationCall() throws {
+        self.application.send(domainModel: self.testRecipes)
+
+        let testItemPaths = [
+            (section: 1, index: 1),
+            (section: 2, index: 0),
+            (section: 3, index: 0),
+        ]
+        // These indices match the item paths above
+        let expectedItemIndices = [
+            0,
+            2,
+            3
+        ]
+        self.application.send(action: .exportRecipes(testItemPaths))
+
+        XCTAssertEqual(
+            self.delegate.exportRecipesCallsCount,
+            1
+        )
+        guard let received = self.delegate.exportRecipesReceivedRecipes else {
+            XCTFail("Expected to receive a list of recipes for export. Found: None")
+            return
+        }
+
+        let foundIndices = received
+            .compactMap {
+                self.testRecipes.firstIndex(of: $0)
+            }
+            .sorted()
+
+        XCTAssertEqual(
+            foundIndices,
+            expectedItemIndices.sorted()
+        )
+    }
+
 }

@@ -233,6 +233,8 @@
 		F69336D02B1A57910049A997 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = F69336CF2B1A57910049A997 /* Factory */; };
 		F69336D92B1A5E8D0049A997 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = F69336D82B1A5E8D0049A997 /* .swiftlint.yml */; };
 		F69336DA2B1A60CB0049A997 /* NowChurning.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F69336D32B1A5B250049A997 /* NowChurning.xcdatamodeld */; };
+		F6D85E6E2B4EE86F007C9709 /* configuration.yml in Resources */ = {isa = PBXBuildFile; fileRef = F6D85E6B2B4EE86F007C9709 /* configuration.yml */; };
+		F6D85E6F2B4EE86F007C9709 /* AutoMockable.stencil in Resources */ = {isa = PBXBuildFile; fileRef = F6D85E6D2B4EE86F007C9709 /* AutoMockable.stencil */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -483,6 +485,8 @@
 		F693368A2B1A56C70049A997 /* MockStackNavigationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockStackNavigationDelegate.swift; sourceTree = "<group>"; };
 		F69336D42B1A5B250049A997 /* NowPouring.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NowPouring.xcdatamodel; sourceTree = "<group>"; };
 		F69336D82B1A5E8D0049A997 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		F6D85E6B2B4EE86F007C9709 /* configuration.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = configuration.yml; sourceTree = "<group>"; };
+		F6D85E6D2B4EE86F007C9709 /* AutoMockable.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AutoMockable.stencil; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -544,6 +548,7 @@
 		F69334362B1A55550049A997 /* NowChurning */ = {
 			isa = PBXGroup;
 			children = (
+				F6D85E692B4EE86F007C9709 /* Tools */,
 				F69335FD2B1A56420049A997 /* AppDelegate.swift */,
 				F69335FC2B1A56420049A997 /* SceneDelegate.swift */,
 				F69334C12B1A55770049A997 /* Assets.xcassets */,
@@ -2091,6 +2096,31 @@
 			path = Mocks;
 			sourceTree = "<group>";
 		};
+		F6D85E692B4EE86F007C9709 /* Tools */ = {
+			isa = PBXGroup;
+			children = (
+				F6D85E6A2B4EE86F007C9709 /* Sourcery */,
+			);
+			path = Tools;
+			sourceTree = SOURCE_ROOT;
+		};
+		F6D85E6A2B4EE86F007C9709 /* Sourcery */ = {
+			isa = PBXGroup;
+			children = (
+				F6D85E6B2B4EE86F007C9709 /* configuration.yml */,
+				F6D85E6C2B4EE86F007C9709 /* Templates */,
+			);
+			path = Sourcery;
+			sourceTree = "<group>";
+		};
+		F6D85E6C2B4EE86F007C9709 /* Templates */ = {
+			isa = PBXGroup;
+			children = (
+				F6D85E6D2B4EE86F007C9709 /* AutoMockable.stencil */,
+			);
+			path = Templates;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2119,8 +2149,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = F69334652B1A55560049A997 /* Build configuration list for PBXNativeTarget "NowChurningTests" */;
 			buildPhases = (
-				F693344A2B1A55560049A997 /* Sources */,
 				F69336D12B1A59780049A997 /* Sourcery */,
+				F693344A2B1A55560049A997 /* Sources */,
 				F693344B2B1A55560049A997 /* Frameworks */,
 				F693344C2B1A55560049A997 /* Resources */,
 			);
@@ -2208,6 +2238,8 @@
 				F69335ED2B1A55770049A997 /* ViewAssets.xcassets in Resources */,
 				F69335972B1A55770049A997 /* Assets.xcassets in Resources */,
 				F693343F2B1A55550049A997 /* Main.storyboard in Resources */,
+				F6D85E6F2B4EE86F007C9709 /* AutoMockable.stencil in Resources */,
+				F6D85E6E2B4EE86F007C9709 /* configuration.yml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2231,6 +2263,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		F69336D12B1A59780049A997 /* Sourcery */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);

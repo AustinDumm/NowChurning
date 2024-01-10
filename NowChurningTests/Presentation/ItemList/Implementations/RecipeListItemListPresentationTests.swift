@@ -24,7 +24,9 @@ final class RecipeListItemListPresentationTests: XCTestCase {
         ),
         emptyListMessage: "Test Empty",
         addNewRecipeText: "Test Add New",
-        editListText: "Test Edit List"
+        editListText: "Test Edit List",
+        exportListText: "Text Export List",
+        exportingListTitle: "Test Export Title"
     )
 
     var testDisplayModel: RecipeListDisplayModel =
@@ -291,10 +293,10 @@ final class RecipeListItemListPresentationTests: XCTestCase {
 
             XCTAssertEqual(
                 viewModel.rightButtons.count,
-                2
+                3
             )
 
-            let addButton = viewModel.rightButtons[0]
+            let addButton = viewModel.rightButtons[safe: 0]
             switch addButton {
             case .init(type: .add, displayTitle: self.content.addNewRecipeText, isEnabled: true):
                 break
@@ -302,12 +304,20 @@ final class RecipeListItemListPresentationTests: XCTestCase {
                 XCTFail("Expected enabled Add button. Found \(addButton)")
             }
 
-            let editButton = viewModel.rightButtons[1]
+            let editButton = viewModel.rightButtons[safe: 1]
             switch editButton {
             case .init(type: .edit, displayTitle: self.content.editListText, isEnabled: true):
                 break
             default:
                 XCTFail("Expected enabled Add button. Found \(editButton)")
+            }
+
+            let exportButton = viewModel.rightButtons[safe: 2]
+            switch exportButton {
+            case .init(type: .export, displayTitle: self.content.exportListText, isEnabled: true):
+                break
+            default:
+                XCTFail("Expected enabled Export button. Found \(editButton)")
             }
             expectation.fulfill()
         }
@@ -346,7 +356,7 @@ final class RecipeListItemListPresentationTests: XCTestCase {
 
             XCTAssertEqual(
                 viewModel.rightButtons.count,
-                2
+                3
             )
 
             let addButton = viewModel.rightButtons[0]
@@ -736,4 +746,119 @@ final class RecipeListItemListPresentationTests: XCTestCase {
         wait(for: [expectation], timeout: 0.0)
     }
 
+    func testPresentation_WhenExportSelected_DoesStartExportMode() throws {
+        self.presentation.send(displayModel: self.testDisplayModel)
+
+        self.presentation.send(
+            navBarEvent: .tap(
+                .right,
+                index: 2
+            )
+        )
+
+        guard let exportingViewModel = self.viewModelSink.sendViewModelReceivedViewModel else {
+            XCTFail("Expected view model sent when presentation starts exporting.")
+            return
+        }
+
+        XCTAssert(exportingViewModel.isEditing)
+        for section in exportingViewModel.sections {
+            for item in section.items {
+                XCTAssertEqual(
+                    item.context,
+                    [.multiselect]
+                )
+            }
+        }
+
+        guard let navBarModel = self.navBarModelSink.sendNavBarViewModelReceivedNavBarViewModel else {
+            XCTFail("Expected nav bar view model sent when presentation starts exporting.")
+            return
+        }
+
+        XCTAssertEqual(
+            navBarModel.leftButtons,
+            [.init(type: .cancel, isEnabled: true)]
+        )
+
+        XCTAssertEqual(
+            navBarModel.rightButtons,
+            [.init(
+                type: .export,
+                isEnabled: true
+            )]
+        )
+    }
+
+    func testPresentation_WhenExportCancelled_DoesStopExporting() throws {
+        self.presentation.send(editModeDisplayModel: .init(isEditing: false, canSave: false))
+        self.presentation.send(displayModel: self.testDisplayModel)
+
+        self.presentation.send(
+            navBarEvent: .tap(
+                .right,
+                index: 2
+            )
+        )
+
+        self.presentation.send(
+            navBarEvent: .tap(
+                .left,
+                index: 0
+            )
+        )
+
+        guard let exportingViewModel = self.viewModelSink.sendViewModelReceivedViewModel else {
+            XCTFail("Expected view model sent when presentation starts exporting.")
+            return
+        }
+
+        for section in exportingViewModel.sections {
+            for item in section.items {
+                XCTAssert(
+                    !item.context.contains(.multiselect)
+                )
+            }
+        }
+
+        guard let navBarModel = self.navBarModelSink.sendNavBarViewModelReceivedNavBarViewModel else {
+            XCTFail("Expected nav bar view model sent when presentation starts exporting.")
+            return
+        }
+
+        XCTAssertEqual(
+            navBarModel.leftButtons,
+            [.init(type: .back, isEnabled: true)]
+        )
+    }
+
+    func testPresentation_WhenExportConfirmed_DoesSendSelected() throws {
+        self.presentation.send(displayModel: self.testDisplayModel)
+
+        self.presentation.send(
+            navBarEvent: .tap(
+                .right,
+                index: 2
+            )
+        )
+
+        self.presentation.send(
+            navBarEvent: .tap(
+                .right,
+                index: 0
+            )
+        )
+
+        XCTAssertEqual(
+            1,
+            self.actionSink.sendActionCallsCount
+        )
+
+        switch self.actionSink.sendActionReceivedAction {
+        case .exportRecipes:
+            break
+        default:
+            XCTFail("Expected exportRecipes action")
+        }
+    }
 }

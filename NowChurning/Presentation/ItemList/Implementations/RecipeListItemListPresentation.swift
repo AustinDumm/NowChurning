@@ -14,6 +14,8 @@ class RecipeListItemListPresentation {
         let emptyListMessage: String
         let addNewRecipeText: String
         let editListText: String
+        let exportListText: String
+        let exportingListTitle: String
     }
 
     weak var itemListViewModelSink: ItemListViewModelSink? {
@@ -30,6 +32,7 @@ class RecipeListItemListPresentation {
     private let actionSink: RecipeListActionSink
     private var displayModel: RecipeListDisplayModel?
     private var editModeDisplayModel: EditModeDisplayModel?
+    private var isExporting = false
     private let content: Content
 
     private var isEditing: Bool {
@@ -54,6 +57,7 @@ class RecipeListItemListPresentation {
                 viewModel: Self.viewModel(
                     fromDisplayModel: displayModel,
                     isEditing: self.isEditing,
+                    isExporting: self.isExporting,
                     content: self.content
                 )
             )
@@ -169,8 +173,10 @@ extension RecipeListItemListPresentation: NavBarEventSink {
     func send(navBarEvent: NavBarEvent) {
         if self.editModeDisplayModel?.isEditing ?? false {
             self.isEditingEvent(navBarEvent: navBarEvent)
+        } else if self.isExporting {
+            self.isExportingEvent(navBarEvent: navBarEvent)
         } else {
-            self.notEditingEvent(navBarEvent: navBarEvent)
+            self.isViewingEvent(navBarEvent: navBarEvent)
         }
     }
 
@@ -187,7 +193,19 @@ extension RecipeListItemListPresentation: NavBarEventSink {
         }
     }
 
-    private func notEditingEvent(navBarEvent: NavBarEvent) {
+    private func isExportingEvent(navBarEvent: NavBarEvent) {
+        switch navBarEvent {
+        case .tap(.left, index: 0):
+            self.cancelExport()
+        case .tap(.right, index: 0):
+            self.confirmExport()
+
+        default:
+            break
+        }
+    }
+
+    private func isViewingEvent(navBarEvent: NavBarEvent) {
         switch navBarEvent {
         case .tap(.right, index: 0):
             self.actionSink
@@ -195,9 +213,36 @@ extension RecipeListItemListPresentation: NavBarEventSink {
         case .tap(.right, index: 1):
             self.actionSink
                 .send(editModeAction: .startEditing)
+        case .tap(.right, index: 2):
+            self.startExporting()
         default:
             break
         }
+    }
+
+    private func startExporting() {
+        self.isExporting = true
+        self.navBarViewModelSink?.send(navBarViewModel: .init(
+            title: self.content.exportingListTitle,
+            leftButtons: [.init(type: .cancel, isEnabled: true)],
+            rightButtons: [.init(type: .exportTextOnly, isEnabled: true)]
+        ))
+
+        self.updateItemListViewModelSink()
+    }
+
+    private func cancelExport() {
+        self.isExporting = false
+        self.updateNavBarViewModelSink()
+        self.updateItemListViewModelSink()
+    }
+
+    private func confirmExport() {
+        self.isExporting = false
+        self.updateNavBarViewModelSink()
+        self.updateItemListViewModelSink()
+
+        self.actionSink.send(action: .exportRecipes([]))
     }
 }
 
@@ -206,6 +251,7 @@ extension RecipeListItemListPresentation {
     private static func viewModel(
         fromDisplayModel displayModel: RecipeListDisplayModel,
         isEditing: Bool,
+        isExporting: Bool,
         content: Content
     ) -> ItemListViewModel {
         if displayModel.recipeSections.isEmpty && !isEditing {
@@ -216,7 +262,8 @@ extension RecipeListItemListPresentation {
         } else {
             return populatedViewModel(
                 fromDisplayModel: displayModel,
-                isEditing: isEditing
+                isEditing: isEditing,
+                isExporting: isExporting
             )
         }
     }
@@ -241,7 +288,8 @@ extension RecipeListItemListPresentation {
 
     private static func populatedViewModel(
         fromDisplayModel displayModel: RecipeListDisplayModel,
-        isEditing: Bool
+        isEditing: Bool,
+        isExporting: Bool
     ) -> ItemListViewModel {
         .init(
             sections: displayModel
@@ -249,7 +297,8 @@ extension RecipeListItemListPresentation {
                 .map { section in
                     self.viewModelSection(
                         fromDisplayModelSection: section,
-                        isEditing: isEditing
+                        isEditing: isEditing,
+                        isExporting: isExporting
                     )
                 },
             isEditing: isEditing
@@ -258,11 +307,14 @@ extension RecipeListItemListPresentation {
 
     private static func viewModelSection(
         fromDisplayModelSection section: RecipeListDisplayModel.Section,
-        isEditing: Bool
+        isEditing: Bool,
+        isExporting: Bool
     ) -> ItemListViewModel.Section {
         let contexts: [ItemListViewModel.Context]
         if isEditing {
             contexts = [.delete]
+        } else if isExporting {
+            contexts = [.multiselect]
         } else {
             contexts = [.navigate, .delete]
         }
@@ -340,6 +392,11 @@ extension RecipeListItemListPresentation {
                     displayTitle: content.editListText,
                     isEnabled: true
                 ),
+                .init(
+                    type: .export,
+                    displayTitle: content.exportListText,
+                    isEnabled: true
+                )
             ]
         }
 

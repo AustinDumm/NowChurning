@@ -10,7 +10,7 @@
 
 /* The word "Bar" refers to a place where alcohol or mixed recipes are stored and served */
 "ingredients_area_title" = " Inventory";
-"recipes_area_title" = "Recipe Recipes";
+"recipes_area_title" = "Recipes";
 
 "editing_state_text" = "Editing";
 
@@ -53,6 +53,7 @@
 
 "recipe_list_add_new_recipe" = "Add New Recipe";
 "recipe_list_edit_list" = "Edit Recipe List";
+"recipe_list_export_list" = "Export Recipe List";
 
 "add_by_measurement_cancel_alert" = "Nothing has been added to your inventory yet. Do you wish to exit or keep editing.";
 "add_by_measurement_stay" = "Keep Editing";
@@ -85,7 +86,8 @@
 
 "my_recipes_preview_switch_to_inventory" = "Do you want to leave Recipes and navigate to Inventory?";
 "my_recipes_preview_switch_confirm" = "Yes, go to Inventory";
-"my_recipes_preview_switch_cancel" = "No, stay in Recipe Recipes";
+"my_recipes_preview_switch_cancel" = "No, stay in Recipes";
+"my_recipes_exporting_title" = "Exporting";
 
 "recipe_recipe_unstocked_alert" = "This item is not stocked in your inventory.";
 "recipe_recipe_unstocked_resolution" = "Add to Inventory";
@@ -136,6 +138,7 @@
 "default_action_name_edit" = "Edit";
 "default_action_name_add" = "Add";
 "default_action_name_done" = "Done";
+"default_action_name_export" = "Export";
 
 // Custom Unit Names
 "dashes" = "dashes";

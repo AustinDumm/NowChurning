@@ -94,6 +94,7 @@ struct ItemListViewModel: Hashable {
         case delete
         case add
         case info
+        case multiselect
         case invalid(reason: String)
         case alert(AlertData)
         case reorder(ValidReorders)

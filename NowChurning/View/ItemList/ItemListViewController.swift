@@ -71,6 +71,8 @@ class ItemListViewController: UIViewController {
         super.viewDidLoad()
 
         self.insetChild(self.collectionViewController)
+        self.collectionView.allowsSelection = true
+        self.collectionView.allowsMultipleSelection = true
         self.collectionViewController
             .collectionView
             .delegate = self
@@ -652,6 +654,8 @@ extension ItemListViewController {
             }
         case .alert(let data):
             return alertAccessory(data: data, for: indexPath)
+        case .multiselect:
+            return .multiselect(displayed: .always)
         }
     }
 
@@ -704,6 +708,8 @@ extension ItemListViewController {
             return .init(systemName: "plus")
         case .done:
             return nil
+        case .export, .exportTextOnly:
+            fatalError("Not yet implemented")
         case .none:
             return nil
         }
@@ -711,25 +717,36 @@ extension ItemListViewController {
 }
 
 extension ItemListViewController: UICollectionViewDelegate {
+    private func itemViewModel(at indexPath: IndexPath) -> ItemViewModel? {
+        let snapshot = self.dataSource.snapshot()
+        guard
+            let sectionIdentifier
+                = snapshot.sectionIdentifiers[safe: indexPath.section],
+            let itemViewModelId
+                = snapshot.itemIdentifiers(inSection: sectionIdentifier)[safe: indexPath.item]
+        else {
+            return nil
+        }
+
+        return self.itemLookup[itemViewModelId]
+    }
+
     func collectionView(
         _ collectionView: UICollectionView,
         shouldSelectItemAt indexPath: IndexPath
     ) -> Bool {
-        false
+        guard let itemViewModel = itemViewModel(at: indexPath) else {
+            return false
+        }
+
+        return itemViewModel.context.contains(.multiselect)
     }
 
     func collectionView(
         _ collectionView: UICollectionView,
         canPerformPrimaryActionForItemAt indexPath: IndexPath
     ) -> Bool {
-        let snapshot = self.dataSource.snapshot()
-        guard
-            let sectionIdentifier
-                = snapshot.sectionIdentifiers[safe: indexPath.section],
-            let itemViewModelId
-                = snapshot.itemIdentifiers(inSection: sectionIdentifier)[safe: indexPath.item],
-            let itemViewModel = self.itemLookup[itemViewModelId]
-        else {
+        guard let itemViewModel = self.itemViewModel(at: indexPath) else {
             return false
         }
 
