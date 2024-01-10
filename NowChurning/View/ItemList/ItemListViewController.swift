@@ -824,6 +824,10 @@ extension ItemListViewController: UICollectionViewDelegate {
 
 extension ItemListViewController: ItemListViewModelSink {
     func send(viewModel: ItemListViewModel) {
+        for selection in self.collectionView.indexPathsForSelectedItems ?? [] {
+            self.collectionView.deselectItem(at: selection, animated: true)
+        }
+
         let itemPairs = viewModel
             .sections
             .flatMap { $0.items }

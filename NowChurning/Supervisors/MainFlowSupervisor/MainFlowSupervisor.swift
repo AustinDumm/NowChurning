@@ -31,6 +31,11 @@ class MainFlowSupervisor: NSObject, Supervisor {
             MainScreenSupervisor,
             RecipesSupervisor
         )
+        case recipeExport(
+            MainScreenSupervisor,
+            RecipesSupervisor,
+            ExportSupervisor
+        )
     }
 
     private let window: UIWindow
@@ -172,6 +177,8 @@ extension MainFlowSupervisor: ParentSupervisor {
                 .inventory(let mainScreen, _),
                 .myRecipes(let mainScreen, _):
             self.state = .mainScreen(mainScreen)
+        case .recipeExport(let mainScreen, let recipes, _):
+            self.state = .myRecipes(mainScreen, recipes)
         }
 
         error.showAsAlert(on: self.navigator)
@@ -227,5 +234,46 @@ extension MainFlowSupervisor: RecipesSupervisorParent {
 
             self.state = .inventory(mainScreen, inventory)
         }
+    }
+
+    func export(recipes: [Recipe]) {
+        guard
+            case let .myRecipes(mainScreenSupervisor, recipesSupervisor) = self.state
+        else {
+            return
+        }
+
+        let modalNavigation = SegmentedNavigationController()
+        let exportSupervisor = ExportSupervisor(
+            recipesToExport: recipes,
+            navigation: modalNavigation,
+            parent: self
+        )
+
+        self.navigator.present(
+            modalNavigation,
+            animated: true
+        )
+        modalNavigation.presentationController?.delegate = self
+
+        self.state = .recipeExport(
+            mainScreenSupervisor,
+            recipesSupervisor,
+            exportSupervisor
+        )
+    }
+}
+
+extension MainFlowSupervisor: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidDismiss(
+        _ presentationController: UIPresentationController
+    ) {
+        guard
+            case .recipeExport(let mainScreen, let recipes, _) = self.state
+        else {
+            return
+        }
+
+        self.state = .myRecipes(mainScreen, recipes)
     }
 }

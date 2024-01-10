@@ -12,6 +12,8 @@ import Factory
 protocol RecipesSupervisorParent: ParentSupervisor {
     func switchToEditing(ingredient: Ingredient)
     func switchToAdd(ingredient: Ingredient)
+
+    func export(recipes: [Recipe])
 }
 
 class RecipesSupervisor: NSObject {
@@ -264,6 +266,7 @@ extension RecipesSupervisor: RecipeListSupervisorParent {
     }
 
     func export(recipes: [Recipe]) {
+        self.parent?.export(recipes: recipes)
     }
 }
 

@@ -233,6 +233,7 @@
 		F69336D02B1A57910049A997 /* Factory in Frameworks */ = {isa = PBXBuildFile; productRef = F69336CF2B1A57910049A997 /* Factory */; };
 		F69336D92B1A5E8D0049A997 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = F69336D82B1A5E8D0049A997 /* .swiftlint.yml */; };
 		F69336DA2B1A60CB0049A997 /* NowChurning.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F69336D32B1A5B250049A997 /* NowChurning.xcdatamodeld */; };
+		F6C154282B4F56BE00C7959C /* ExportSupervisor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C154272B4F56BE00C7959C /* ExportSupervisor.swift */; };
 		F6D85E6E2B4EE86F007C9709 /* configuration.yml in Resources */ = {isa = PBXBuildFile; fileRef = F6D85E6B2B4EE86F007C9709 /* configuration.yml */; };
 		F6D85E6F2B4EE86F007C9709 /* AutoMockable.stencil in Resources */ = {isa = PBXBuildFile; fileRef = F6D85E6D2B4EE86F007C9709 /* AutoMockable.stencil */; };
 /* End PBXBuildFile section */
@@ -485,6 +486,7 @@
 		F693368A2B1A56C70049A997 /* MockStackNavigationDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockStackNavigationDelegate.swift; sourceTree = "<group>"; };
 		F69336D42B1A5B250049A997 /* NowPouring.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NowPouring.xcdatamodel; sourceTree = "<group>"; };
 		F69336D82B1A5E8D0049A997 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		F6C154272B4F56BE00C7959C /* ExportSupervisor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportSupervisor.swift; sourceTree = "<group>"; };
 		F6D85E6B2B4EE86F007C9709 /* configuration.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = configuration.yml; sourceTree = "<group>"; };
 		F6D85E6D2B4EE86F007C9709 /* AutoMockable.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AutoMockable.stencil; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -945,7 +947,7 @@
 				F69334D02B1A55770049A997 /* Supervisor.swift */,
 				F69334D12B1A55770049A997 /* TagSelectionSupervisor */,
 				F69334D32B1A55770049A997 /* IngredientDetailsSupervisor */,
-				F69334D52B1A55770049A997 /* RecipessSupervisor */,
+				F69334D52B1A55770049A997 /* RecipesSupervisor */,
 				F69334D72B1A55770049A997 /* RecipesListSupervisor */,
 				F69334D92B1A55770049A997 /* SupervisorDI.swift */,
 				F69334DA2B1A55770049A997 /* LaunchSupervisor */,
@@ -962,6 +964,7 @@
 				F69334F72B1A55770049A997 /* EditRecipeStepSupervisor */,
 				F69334F92B1A55770049A997 /* RecipeStepDetailsSupervisor */,
 				F69334FB2B1A55770049A997 /* MeasurementEditSupervisor */,
+				F6C154262B4F568800C7959C /* ExportSupervisor */,
 			);
 			path = Supervisors;
 			sourceTree = "<group>";
@@ -998,12 +1001,12 @@
 			path = IngredientDetailsSupervisor;
 			sourceTree = "<group>";
 		};
-		F69334D52B1A55770049A997 /* RecipessSupervisor */ = {
+		F69334D52B1A55770049A997 /* RecipesSupervisor */ = {
 			isa = PBXGroup;
 			children = (
 				F69334D62B1A55770049A997 /* RecipesSupervisor.swift */,
 			);
-			path = RecipessSupervisor;
+			path = RecipesSupervisor;
 			sourceTree = "<group>";
 		};
 		F69334D72B1A55770049A997 /* RecipesListSupervisor */ = {
@@ -2096,6 +2099,14 @@
 			path = Mocks;
 			sourceTree = "<group>";
 		};
+		F6C154262B4F568800C7959C /* ExportSupervisor */ = {
+			isa = PBXGroup;
+			children = (
+				F6C154272B4F56BE00C7959C /* ExportSupervisor.swift */,
+			);
+			path = ExportSupervisor;
+			sourceTree = "<group>";
+		};
 		F6D85E692B4EE86F007C9709 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
@@ -2366,6 +2377,7 @@
 				F69335882B1A55770049A997 /* RecipeStepEditDisplayBoundary.swift in Sources */,
 				F69335B02B1A55770049A997 /* MeasurePreviewSupervisor.swift in Sources */,
 				F69335D52B1A55770049A997 /* CoreDataUserManager.swift in Sources */,
+				F6C154282B4F56BE00C7959C /* ExportSupervisor.swift in Sources */,
 				F69335B82B1A55770049A997 /* InstructionEntrySupervisor.swift in Sources */,
 				F69335A02B1A55770049A997 /* IngredientFlowSupervisor.swift in Sources */,
 				F69335732B1A55770049A997 /* SelectionListViewBoundary.swift in Sources */,
