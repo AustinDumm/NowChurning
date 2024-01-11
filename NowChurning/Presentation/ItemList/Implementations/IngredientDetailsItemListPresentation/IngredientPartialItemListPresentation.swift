@@ -147,7 +147,8 @@ extension IngredientPartialItemListPresentation: ItemListEventSink {
                 .delete,
                 .move,
                 .openInfo,
-                .resolveAlert:
+                .resolveAlert,
+                .multiselectUpdate:
             return nil
         case .edit(string: let newString,
                    forItemAt: let indexPath):

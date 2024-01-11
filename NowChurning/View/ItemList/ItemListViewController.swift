@@ -575,7 +575,7 @@ extension ItemListViewController {
 
         case .message(let text):
             return messageConfiguration(forCell: cell, content: text)
-            
+
         case .attributedText(let text):
             return attributedTextConfiguration(forCell: cell, content: text)
 
@@ -801,6 +801,33 @@ extension ItemListViewController: UICollectionViewDelegate {
         } else {
             return currentIndexPath
         }
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didSelectItemAt indexPath: IndexPath
+    ) {
+        self.sendMultiselectUpdate()
+    }
+
+    func collectionView(
+        _ collectionView: UICollectionView,
+        didDeselectItemAt indexPath: IndexPath
+    ) {
+        self.sendMultiselectUpdate()
+    }
+
+    private func sendMultiselectUpdate() {
+        guard
+            collectionView.allowsMultipleSelection,
+            let selectedIndexPaths = collectionView.indexPathsForSelectedItems
+        else {
+            return
+        }
+
+        self.eventSink?.send(event: .multiselectUpdate(
+            itemsAt: selectedIndexPaths
+        ))
     }
 
     private func selectInitialSelection() {

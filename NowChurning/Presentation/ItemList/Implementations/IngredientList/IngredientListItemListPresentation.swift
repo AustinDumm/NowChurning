@@ -244,7 +244,12 @@ extension IngredientListItemListPresentation: ItemListEventSink {
                 inSection: indexPath.section,
                 atIndex: indexPath.item
             )
-        case .edit, .selectFooter, .move, .openInfo, .resolveAlert:
+        case .edit,
+                .selectFooter,
+                .move,
+                .openInfo,
+                .resolveAlert,
+                .multiselectUpdate:
             return nil
         }
     }

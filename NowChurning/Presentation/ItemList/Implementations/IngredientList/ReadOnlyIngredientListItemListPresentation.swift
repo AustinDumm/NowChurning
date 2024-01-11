@@ -156,7 +156,8 @@ extension ReadOnlyIngredientListItemListPresentation: ItemListEventSink {
                 .selectFooter,
                 .move,
                 .openInfo,
-                .resolveAlert:
+                .resolveAlert,
+                .multiselectUpdate:
             // Noop as this Presentation does not handle editing
             break
         }

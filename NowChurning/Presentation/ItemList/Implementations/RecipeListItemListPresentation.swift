@@ -35,6 +35,8 @@ class RecipeListItemListPresentation {
     private var isExporting = false
     private let content: Content
 
+    private var selectedIndexPaths: [IndexPath]?
+
     private var isEditing: Bool {
         self.editModeDisplayModel?.isEditing ?? false
     }
@@ -153,6 +155,7 @@ extension RecipeListItemListPresentation: ItemListEventSink {
                         atIndex: indexPath.item
                     )
                 )
+
         case .delete(
             itemAt: let indexPath
         ):
@@ -163,6 +166,10 @@ extension RecipeListItemListPresentation: ItemListEventSink {
                         atIndex: indexPath.item
                     )
                 )
+
+        case .multiselectUpdate(itemsAt: let indexPaths):
+            self.selectedIndexPaths = indexPaths
+
         default:
             break
         }
@@ -235,6 +242,8 @@ extension RecipeListItemListPresentation: NavBarEventSink {
         self.isExporting = false
         self.updateNavBarViewModelSink()
         self.updateItemListViewModelSink()
+
+        self.selectedIndexPaths = nil
     }
 
     private func confirmExport() {
@@ -242,7 +251,14 @@ extension RecipeListItemListPresentation: NavBarEventSink {
         self.updateNavBarViewModelSink()
         self.updateItemListViewModelSink()
 
-        self.actionSink.send(action: .exportRecipes([]))
+        if let selectedIndexPaths {
+            self.actionSink.send(action: .exportRecipes(
+                selectedIndexPaths
+                    .map { (section: $0.section, index: $0.item) }
+            ))
+        }
+
+        self.selectedIndexPaths = nil
     }
 }
 

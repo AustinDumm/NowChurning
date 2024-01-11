@@ -256,7 +256,12 @@ extension MeasureListItemListPresentation: ItemListEventSink {
                     atIndex: indexPath.item,
                     inSection: indexPath.section - 1
                 ))
-        case .edit, .selectFooter, .move, .openInfo, .resolveAlert:
+        case .edit,
+                .selectFooter,
+                .move,
+                .openInfo,
+                .resolveAlert,
+                .multiselectUpdate:
             break
         }
     }

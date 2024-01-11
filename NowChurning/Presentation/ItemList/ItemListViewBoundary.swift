@@ -113,6 +113,7 @@ protocol ItemListViewModelSink: AnyObject {
 enum ItemListEvent {
     case select(itemAt: IndexPath)
     case selectFooter(forSection: Int)
+    case multiselectUpdate(itemsAt: [IndexPath])
 
     case delete(itemAt: IndexPath)
     case edit(
