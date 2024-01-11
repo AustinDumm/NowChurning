@@ -234,6 +234,10 @@
 		F69336D92B1A5E8D0049A997 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = F69336D82B1A5E8D0049A997 /* .swiftlint.yml */; };
 		F69336DA2B1A60CB0049A997 /* NowChurning.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = F69336D32B1A5B250049A997 /* NowChurning.xcdatamodeld */; };
 		F6C154282B4F56BE00C7959C /* ExportSupervisor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C154272B4F56BE00C7959C /* ExportSupervisor.swift */; };
+		F6C1542B2B4F5F4800C7959C /* MSAL in Frameworks */ = {isa = PBXBuildFile; productRef = F6C1542A2B4F5F4800C7959C /* MSAL */; };
+		F6C1542E2B4F62E400C7959C /* MicrosoftAuthSupervisor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C1542D2B4F62E400C7959C /* MicrosoftAuthSupervisor.swift */; };
+		F6C154302B4F64EC00C7959C /* Secrets.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C1542F2B4F64EC00C7959C /* Secrets.swift */; };
+		F6C154392B4F702100C7959C /* AuthenticationPlaceholderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C154382B4F702100C7959C /* AuthenticationPlaceholderViewController.swift */; };
 		F6D85E6E2B4EE86F007C9709 /* configuration.yml in Resources */ = {isa = PBXBuildFile; fileRef = F6D85E6B2B4EE86F007C9709 /* configuration.yml */; };
 		F6D85E6F2B4EE86F007C9709 /* AutoMockable.stencil in Resources */ = {isa = PBXBuildFile; fileRef = F6D85E6D2B4EE86F007C9709 /* AutoMockable.stencil */; };
 /* End PBXBuildFile section */
@@ -487,6 +491,9 @@
 		F69336D42B1A5B250049A997 /* NowPouring.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = NowPouring.xcdatamodel; sourceTree = "<group>"; };
 		F69336D82B1A5E8D0049A997 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		F6C154272B4F56BE00C7959C /* ExportSupervisor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportSupervisor.swift; sourceTree = "<group>"; };
+		F6C1542D2B4F62E400C7959C /* MicrosoftAuthSupervisor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MicrosoftAuthSupervisor.swift; sourceTree = "<group>"; };
+		F6C1542F2B4F64EC00C7959C /* Secrets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Secrets.swift; sourceTree = "<group>"; };
+		F6C154382B4F702100C7959C /* AuthenticationPlaceholderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationPlaceholderViewController.swift; sourceTree = "<group>"; };
 		F6D85E6B2B4EE86F007C9709 /* configuration.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = configuration.yml; sourceTree = "<group>"; };
 		F6D85E6D2B4EE86F007C9709 /* AutoMockable.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AutoMockable.stencil; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -497,6 +504,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F69336D02B1A57910049A997 /* Factory in Frameworks */,
+				F6C1542B2B4F5F4800C7959C /* MSAL in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -550,6 +558,7 @@
 		F69334362B1A55550049A997 /* NowChurning */ = {
 			isa = PBXGroup;
 			children = (
+				F6C1542F2B4F64EC00C7959C /* Secrets.swift */,
 				F6D85E692B4EE86F007C9709 /* Tools */,
 				F69335FD2B1A56420049A997 /* AppDelegate.swift */,
 				F69335FC2B1A56420049A997 /* SceneDelegate.swift */,
@@ -965,6 +974,7 @@
 				F69334F92B1A55770049A997 /* RecipeStepDetailsSupervisor */,
 				F69334FB2B1A55770049A997 /* MeasurementEditSupervisor */,
 				F6C154262B4F568800C7959C /* ExportSupervisor */,
+				F6C1542C2B4F62CB00C7959C /* MicrosoftAuthSupervisor */,
 			);
 			path = Supervisors;
 			sourceTree = "<group>";
@@ -1397,6 +1407,7 @@
 		F69335442B1A55770049A997 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F6C154372B4F700E00C7959C /* AuthenticationPlaceholder */,
 				F66E9F532B3BA6B100311359 /* Navigation */,
 				F69335452B1A55770049A997 /* FormList */,
 				F69335492B1A55770049A997 /* TileCollection */,
@@ -2107,6 +2118,22 @@
 			path = ExportSupervisor;
 			sourceTree = "<group>";
 		};
+		F6C1542C2B4F62CB00C7959C /* MicrosoftAuthSupervisor */ = {
+			isa = PBXGroup;
+			children = (
+				F6C1542D2B4F62E400C7959C /* MicrosoftAuthSupervisor.swift */,
+			);
+			path = MicrosoftAuthSupervisor;
+			sourceTree = "<group>";
+		};
+		F6C154372B4F700E00C7959C /* AuthenticationPlaceholder */ = {
+			isa = PBXGroup;
+			children = (
+				F6C154382B4F702100C7959C /* AuthenticationPlaceholderViewController.swift */,
+			);
+			path = AuthenticationPlaceholder;
+			sourceTree = "<group>";
+		};
 		F6D85E692B4EE86F007C9709 /* Tools */ = {
 			isa = PBXGroup;
 			children = (
@@ -2151,6 +2178,7 @@
 			name = NowChurning;
 			packageProductDependencies = (
 				F69336CF2B1A57910049A997 /* Factory */,
+				F6C1542A2B4F5F4800C7959C /* MSAL */,
 			);
 			productName = NowChurning;
 			productReference = F69334342B1A55550049A997 /* NowChurning.app */;
@@ -2227,6 +2255,7 @@
 			mainGroup = F693342B2B1A55550049A997;
 			packageReferences = (
 				F69336CE2B1A57910049A997 /* XCRemoteSwiftPackageReference "Factory" */,
+				F6C154292B4F5F4800C7959C /* XCRemoteSwiftPackageReference "microsoft-authentication-library-for-objc" */,
 			);
 			productRefGroup = F69334352B1A55550049A997 /* Products */;
 			projectDirPath = "";
@@ -2378,6 +2407,7 @@
 				F69335B02B1A55770049A997 /* MeasurePreviewSupervisor.swift in Sources */,
 				F69335D52B1A55770049A997 /* CoreDataUserManager.swift in Sources */,
 				F6C154282B4F56BE00C7959C /* ExportSupervisor.swift in Sources */,
+				F6C154392B4F702100C7959C /* AuthenticationPlaceholderViewController.swift in Sources */,
 				F69335B82B1A55770049A997 /* InstructionEntrySupervisor.swift in Sources */,
 				F69335A02B1A55770049A997 /* IngredientFlowSupervisor.swift in Sources */,
 				F69335732B1A55770049A997 /* SelectionListViewBoundary.swift in Sources */,
@@ -2389,6 +2419,7 @@
 				F69335D72B1A55770049A997 /* IngredientTagCoreDataStore.swift in Sources */,
 				F69335DD2B1A55770049A997 /* MeasurementFormatter+Measurements.swift in Sources */,
 				F693356F2B1A55770049A997 /* RecipeDetailsItemListPresentation.swift in Sources */,
+				F6C154302B4F64EC00C7959C /* Secrets.swift in Sources */,
 				F69335DB2B1A55770049A997 /* AppContent.swift in Sources */,
 				F69335BD2B1A55770049A997 /* AppError.swift in Sources */,
 				F69335F52B1A55770049A997 /* UIContextualAction+CellDelete.swift in Sources */,
@@ -2446,6 +2477,7 @@
 				F69335D32B1A55770049A997 /* NewIngredientFromListStore.swift in Sources */,
 				F69335BA2B1A55770049A997 /* RecipeStepDetailsSupervisor.swift in Sources */,
 				F66E9F552B3BA6BE00311359 /* SegmentedNavigationController.swift in Sources */,
+				F6C1542E2B4F62E400C7959C /* MicrosoftAuthSupervisor.swift in Sources */,
 				F69335D12B1A55770049A997 /* CDRecipeStep+CoreDataClass.swift in Sources */,
 				F69335752B1A55770049A997 /* RecipeDetailsDomainBoundary.swift in Sources */,
 				F69335C62B1A55770049A997 /* CDIngredient+CoreDataClass.swift in Sources */,
@@ -2903,6 +2935,14 @@
 				minimumVersion = 2.3.1;
 			};
 		};
+		F6C154292B4F5F4800C7959C /* XCRemoteSwiftPackageReference "microsoft-authentication-library-for-objc" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/AzureAD/microsoft-authentication-library-for-objc";
+			requirement = {
+				kind = exactVersion;
+				version = 1.2.21;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2910,6 +2950,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F69336CE2B1A57910049A997 /* XCRemoteSwiftPackageReference "Factory" */;
 			productName = Factory;
+		};
+		F6C1542A2B4F5F4800C7959C /* MSAL */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F6C154292B4F5F4800C7959C /* XCRemoteSwiftPackageReference "microsoft-authentication-library-for-objc" */;
+			productName = MSAL;
 		};
 /* End XCSwiftPackageProductDependency section */
 

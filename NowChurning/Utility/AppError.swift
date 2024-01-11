@@ -89,6 +89,12 @@ enum AppError: Int {
 
     // MARK: Recipe Step Details Supervisor
     case recipeStepDetailsEndFailure
+    
+    // MARK: Export Supervisor
+    case invalidExportChildEndState
+
+    // MARK: Microsoft Auth Error
+    case failedMicrosoftAuthentication
 
     func showAsAlert(on viewController: UIViewController) {
         let versionString = appVersion()?.filter({ $0 != "."}) ?? ""
