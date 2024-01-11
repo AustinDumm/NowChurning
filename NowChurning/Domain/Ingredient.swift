@@ -7,12 +7,13 @@
 
 import Foundation
 
-struct Ingredient: Equatable, Comparable {
+struct Ingredient: Identifiable, Equatable, Comparable {
+    typealias ID = NowChurning.ID<Ingredient>
     enum InvalidityReason {
         case emptyName
     }
 
-    var id: ID<Self>
+    var id: ID
     var name: String
     var description: String
     var tags: [Tag<Ingredient>]
@@ -26,7 +27,7 @@ struct Ingredient: Equatable, Comparable {
     }
 
     init(
-        id: ID<Self> = ID(),
+        id: ID = ID(),
         name: String,
         description: String,
         tags: [Tag<Ingredient>]

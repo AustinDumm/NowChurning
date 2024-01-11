@@ -7,12 +7,13 @@
 
 import Foundation
 
-struct Tag<Base>: Equatable, Hashable, Comparable {
-    let id: ID<Tag>
+struct Tag<Base>: Identifiable, Equatable, Hashable, Comparable {
+    typealias ID = NowChurning.ID<Tag>
+    let id: ID
     let name: String
 
     init(
-        id: ID<Tag> = ID(),
+        id: ID = ID(),
         name: String
     ) {
         self.id = id

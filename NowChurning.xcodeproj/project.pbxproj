@@ -240,6 +240,7 @@
 		F6C154392B4F702100C7959C /* AuthenticationPlaceholderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6C154382B4F702100C7959C /* AuthenticationPlaceholderViewController.swift */; };
 		F6D85E6E2B4EE86F007C9709 /* configuration.yml in Resources */ = {isa = PBXBuildFile; fileRef = F6D85E6B2B4EE86F007C9709 /* configuration.yml */; };
 		F6D85E6F2B4EE86F007C9709 /* AutoMockable.stencil in Resources */ = {isa = PBXBuildFile; fileRef = F6D85E6D2B4EE86F007C9709 /* AutoMockable.stencil */; };
+		F6EACEF92B506DB300D2753A /* JSONWebStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6EACEF82B506DB300D2753A /* JSONWebStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -496,6 +497,7 @@
 		F6C154382B4F702100C7959C /* AuthenticationPlaceholderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationPlaceholderViewController.swift; sourceTree = "<group>"; };
 		F6D85E6B2B4EE86F007C9709 /* configuration.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = configuration.yml; sourceTree = "<group>"; };
 		F6D85E6D2B4EE86F007C9709 /* AutoMockable.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AutoMockable.stencil; sourceTree = "<group>"; };
+		F6EACEF82B506DB300D2753A /* JSONWebStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONWebStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1159,6 +1161,7 @@
 		F69335012B1A55770049A997 /* Persistance */ = {
 			isa = PBXGroup;
 			children = (
+				F6EACEF72B506D8E00D2753A /* JSONWebStore */,
 				F69335022B1A55770049A997 /* MeasureListStore */,
 				F69335072B1A55770049A997 /* CoreDataManager */,
 				F69335092B1A55770049A997 /* MeasureStore */,
@@ -2159,6 +2162,14 @@
 			path = Templates;
 			sourceTree = "<group>";
 		};
+		F6EACEF72B506D8E00D2753A /* JSONWebStore */ = {
+			isa = PBXGroup;
+			children = (
+				F6EACEF82B506DB300D2753A /* JSONWebStore.swift */,
+			);
+			path = JSONWebStore;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2400,6 +2411,7 @@
 				F69335642B1A55770049A997 /* NavBarViewBoundary.swift in Sources */,
 				F69335EE2B1A55770049A997 /* AlertViewDelegate.swift in Sources */,
 				F69335F42B1A55770049A997 /* UIView+Inset.swift in Sources */,
+				F6EACEF92B506DB300D2753A /* JSONWebStore.swift in Sources */,
 				F69335E42B1A55770049A997 /* FormListViewController.swift in Sources */,
 				F69335BB2B1A55770049A997 /* MeasurementEditSupervisor.swift in Sources */,
 				F693356A2B1A55770049A997 /* IngredientPartialItemListPresentation+ModelTransforms.swift in Sources */,
