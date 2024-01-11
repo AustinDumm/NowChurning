@@ -12,7 +12,7 @@ class ExportSupervisor: NSObject, Supervisor {
 
     private enum State {
         case authentication(MicrosoftAuthSupervisor)
-        case upload
+        case upload(JSONWebStore)
     }
 
     private var state: State
@@ -87,9 +87,40 @@ extension ExportSupervisor: MicrosoftAuthSupervisorParent {
             animated: true
         )
 
-        self.state = .upload
+        let store = JSONWebStore()
+        store.delegate = self
+        store.upload(model: self.collectUploadModel())
+        self.state = .upload(store)
+    }
+
+    private func collectUploadModel() -> JSONWebStore.DomainModel {
+        var tagSet = Set<Tag<Ingredient>>()
+        var ingredientSet = [Ingredient.ID: Ingredient]()
+
+        for recipesToExport in self.recipesToExport {
+            for step in recipesToExport.recipeDetails?.steps ?? [] {
+                switch step {
+                case .ingredient(let measure):
+                    ingredientSet[measure.ingredient.id] = measure.ingredient
+                case .ingredientTags(let tags, _):
+                    for tag in tags {
+                        tagSet.insert(tag)
+                    }
+                case .instruction(let string):
+                    break
+                }
+            }
+        }
+
+        return .init(
+            tags: Array(tagSet),
+            ingredients: Array(ingredientSet.values),
+            recipes: self.recipesToExport
+        )
     }
 }
+
+extension ExportSupervisor: JSONWebStoreDelegate {}
 
 extension ExportSupervisor: SegmentedNavigationControllerDelegate {
     func didDisconnectDelegate(
