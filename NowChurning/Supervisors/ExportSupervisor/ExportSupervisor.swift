@@ -12,7 +12,7 @@ class ExportSupervisor: NSObject, Supervisor {
 
     private enum State {
         case authentication(MicrosoftAuthSupervisor)
-        case upload(JSONWebStore)
+        case upload(JSONWebStore<ExportSupervisor>)
     }
 
     private var state: State
@@ -72,6 +72,8 @@ extension ExportSupervisor: ParentSupervisor {
 }
 
 extension ExportSupervisor: MicrosoftAuthSupervisorParent {
+    private static let uploadDomain = "https://graph.microsoft.com/v1.0"
+    private static let uploadPath = "/me/drive/root:/NowChurning/exported.txt:/content"
     func didAuthenticate(
         token: String,
         identifier: String?
@@ -87,13 +89,17 @@ extension ExportSupervisor: MicrosoftAuthSupervisorParent {
             animated: true
         )
 
-        let store = JSONWebStore()
+        let store = JSONWebStore(
+            delegate: self,
+            authToken: token,
+            uploadEndpoint: "\(Self.uploadDomain)\(Self.uploadPath)"
+        )
         store.delegate = self
         store.upload(model: self.collectUploadModel())
         self.state = .upload(store)
     }
 
-    private func collectUploadModel() -> JSONWebStore.DomainModel {
+    private func collectUploadModel() -> JSONWebStore<ExportSupervisor>.DomainModel {
         var tagSet = Set<Tag<Ingredient>>()
         var ingredientSet = [Ingredient.ID: Ingredient]()
 
@@ -120,7 +126,25 @@ extension ExportSupervisor: MicrosoftAuthSupervisorParent {
     }
 }
 
-extension ExportSupervisor: JSONWebStoreDelegate {}
+extension ExportSupervisor: JSONWebStoreDelegate {
+    struct MicrosoftResponse: Codable {
+        var id: String
+        var name: String
+        var size: Int
+    }
+    typealias Response = MicrosoftResponse
+
+    func uploadResult(
+        result: Result<MicrosoftResponse, JSONWebStoreError>
+    ) {
+        switch result {
+        case .success(let success):
+            print("!!! Did upload")
+        case .failure(let failure):
+            print("!!! Failed")
+        }
+    }
+}
 
 extension ExportSupervisor: SegmentedNavigationControllerDelegate {
     func didDisconnectDelegate(

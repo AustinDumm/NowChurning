@@ -241,6 +241,7 @@
 		F6D85E6E2B4EE86F007C9709 /* configuration.yml in Resources */ = {isa = PBXBuildFile; fileRef = F6D85E6B2B4EE86F007C9709 /* configuration.yml */; };
 		F6D85E6F2B4EE86F007C9709 /* AutoMockable.stencil in Resources */ = {isa = PBXBuildFile; fileRef = F6D85E6D2B4EE86F007C9709 /* AutoMockable.stencil */; };
 		F6EACEF92B506DB300D2753A /* JSONWebStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6EACEF82B506DB300D2753A /* JSONWebStore.swift */; };
+		F6EACEFC2B50B25800D2753A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = F6EACEFB2B50B25800D2753A /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -505,6 +506,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F6EACEFC2B50B25800D2753A /* Alamofire in Frameworks */,
 				F69336D02B1A57910049A997 /* Factory in Frameworks */,
 				F6C1542B2B4F5F4800C7959C /* MSAL in Frameworks */,
 			);
@@ -2190,6 +2192,7 @@
 			packageProductDependencies = (
 				F69336CF2B1A57910049A997 /* Factory */,
 				F6C1542A2B4F5F4800C7959C /* MSAL */,
+				F6EACEFB2B50B25800D2753A /* Alamofire */,
 			);
 			productName = NowChurning;
 			productReference = F69334342B1A55550049A997 /* NowChurning.app */;
@@ -2267,6 +2270,7 @@
 			packageReferences = (
 				F69336CE2B1A57910049A997 /* XCRemoteSwiftPackageReference "Factory" */,
 				F6C154292B4F5F4800C7959C /* XCRemoteSwiftPackageReference "microsoft-authentication-library-for-objc" */,
+				F6EACEFA2B50B25800D2753A /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = F69334352B1A55550049A997 /* Products */;
 			projectDirPath = "";
@@ -2955,6 +2959,14 @@
 				version = 1.2.21;
 			};
 		};
+		F6EACEFA2B50B25800D2753A /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.8.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -2967,6 +2979,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = F6C154292B4F5F4800C7959C /* XCRemoteSwiftPackageReference "microsoft-authentication-library-for-objc" */;
 			productName = MSAL;
+		};
+		F6EACEFB2B50B25800D2753A /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = F6EACEFA2B50B25800D2753A /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
 		};
 /* End XCSwiftPackageProductDependency section */
 

@@ -6,10 +6,19 @@
 //
 
 import Foundation
+import Alamofire
 
-protocol JSONWebStoreDelegate: AnyObject {}
+protocol JSONWebStoreDelegate: AnyObject {
+    associatedtype Response: Codable
+    func uploadResult(result: Result<Response, JSONWebStoreError>)
+}
+enum JSONWebStoreError: Swift.Error {
+    case encoding(String)
+    case upload(String)
+}
 
-class JSONWebStore {
+class JSONWebStore<Delegate: JSONWebStoreDelegate> {
+
     struct Payload: Codable {
         var ingredientTags: [PayloadIngredientTag]
         var ingredients: [PayloadIngredient]
@@ -51,7 +60,20 @@ class JSONWebStore {
         case any
     }
 
-    weak var delegate: JSONWebStoreDelegate?
+    weak var delegate: Delegate?
+
+    private let authToken: String
+    private let uploadEndpoint: String
+
+    init(
+        delegate: Delegate? = nil,
+        authToken: String,
+        uploadEndpoint: String
+    ) {
+        self.delegate = delegate
+        self.authToken = authToken
+        self.uploadEndpoint = uploadEndpoint
+    }
 
     struct DomainModel {
         var tags: [Tag<Ingredient>]
@@ -60,8 +82,33 @@ class JSONWebStore {
     }
     func upload(model: DomainModel) {
         let payload = Self.payload(from: model)
+        let jsonEncoder = JSONEncoder()
 
-        print("!!! \(payload)")
+        do {
+            let data = try jsonEncoder.encode(payload)
+            AF.upload(
+                data,
+                to: self.uploadEndpoint,
+                method: .put,
+                headers: .init([
+                    .authorization(bearerToken: self.authToken),
+                    .contentType("text/plain")
+                ])
+            ).responseDecodable(
+                of: Delegate.Response.self
+            ) { [weak self] response in
+                self?.delegate?.uploadResult(
+                    result: response
+                        .result
+                        .mapError {
+                            JSONWebStoreError.upload($0.localizedDescription)
+                        }
+                )
+            }
+        } catch {
+            self.delegate?.uploadResult(result: .failure(.encoding(error.localizedDescription)))
+            return
+        }
     }
 
     private static func payload(
