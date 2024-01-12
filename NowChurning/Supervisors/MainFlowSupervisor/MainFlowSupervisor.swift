@@ -157,6 +157,14 @@ extension MainFlowSupervisor: ParentSupervisor {
                 mainScreen
             )
 
+        case .recipeExport(
+            let mainScreen,
+            let recipes,
+            let expected
+        ) where expected === child:
+            self.navigator.dismiss(animated: true)
+            self.state = .myRecipes(mainScreen, recipes)
+
         default:
             self.handle(error: .mainEndStateFailure)
         }
@@ -178,6 +186,7 @@ extension MainFlowSupervisor: ParentSupervisor {
                 .myRecipes(let mainScreen, _):
             self.state = .mainScreen(mainScreen)
         case .recipeExport(let mainScreen, let recipes, _):
+            self.navigator.dismiss(animated: true)
             self.state = .myRecipes(mainScreen, recipes)
         }
 

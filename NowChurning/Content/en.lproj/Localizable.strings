@@ -143,3 +143,9 @@
 // Custom Unit Names
 "dashes" = "dashes";
 "leaves" = "leaves";
+
+"uploading_ok_text" = "OK";
+"uploading_progress_title" = "Uploading";
+"uploading_progress_text" = "Export In Progress...";
+"uploading_complete_text" = "Export Complete!";
+"uploading_failed_text" = "Export Failed. Please Try Again Later";

@@ -12,7 +12,7 @@ class ExportSupervisor: NSObject, Supervisor {
 
     private enum State {
         case authentication(MicrosoftAuthSupervisor)
-        case upload(JSONWebStore<ExportSupervisor>)
+        case upload(JSONWebStore<ExportSupervisor>, UploadProgressViewController)
     }
 
     private var state: State
@@ -78,14 +78,24 @@ extension ExportSupervisor: MicrosoftAuthSupervisorParent {
         token: String,
         identifier: String?
     ) {
-        let tempViewController = UIViewController()
-        tempViewController.title = "Did Authenticate!"
-        tempViewController.navigationItem.leftBarButtonItem = .init(systemItem: .cancel)
-        tempViewController.navigationItem.rightBarButtonItem = .init(systemItem: .done)
-        tempViewController.view.backgroundColor = .systemPink
+        let uploadViewController = UploadProgressViewController()
+        uploadViewController.setState(.uploading)
+        uploadViewController.confirmCallback = { [weak self, parent] in
+            guard
+                let self
+            else {
+                parent?.recover(
+                    fromError: .invalidExportChildEndState,
+                    on: nil
+                )
+                return
+            }
+
+            self.parent?.childDidEnd(supervisor: self)
+        }
 
         self.navigation.setViewControllers(
-            [tempViewController],
+            [uploadViewController],
             animated: true
         )
 
@@ -96,7 +106,7 @@ extension ExportSupervisor: MicrosoftAuthSupervisorParent {
         )
         store.delegate = self
         store.upload(model: self.collectUploadModel())
-        self.state = .upload(store)
+        self.state = .upload(store, uploadViewController)
     }
 
     private func collectUploadModel() -> JSONWebStore<ExportSupervisor>.DomainModel {
@@ -112,7 +122,7 @@ extension ExportSupervisor: MicrosoftAuthSupervisorParent {
                     for tag in tags {
                         tagSet.insert(tag)
                     }
-                case .instruction(let string):
+                case .instruction:
                     break
                 }
             }
@@ -137,11 +147,16 @@ extension ExportSupervisor: JSONWebStoreDelegate {
     func uploadResult(
         result: Result<MicrosoftResponse, JSONWebStoreError>
     ) {
+        guard case let .upload(_, progressViewController) = self.state else {
+            self.parent?.childDidEnd(supervisor: self)
+            return
+        }
+
         switch result {
-        case .success(let success):
-            print("!!! Did upload")
-        case .failure(let failure):
-            print("!!! Failed")
+        case .success:
+            progressViewController.setState(.done)
+        case .failure:
+            progressViewController.setState(.failed)
         }
     }
 }

@@ -242,6 +242,7 @@
 		F6D85E6F2B4EE86F007C9709 /* AutoMockable.stencil in Resources */ = {isa = PBXBuildFile; fileRef = F6D85E6D2B4EE86F007C9709 /* AutoMockable.stencil */; };
 		F6EACEF92B506DB300D2753A /* JSONWebStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6EACEF82B506DB300D2753A /* JSONWebStore.swift */; };
 		F6EACEFC2B50B25800D2753A /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = F6EACEFB2B50B25800D2753A /* Alamofire */; };
+		F6EACEFF2B50BB1300D2753A /* UploadProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6EACEFE2B50BB1300D2753A /* UploadProgressViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -499,6 +500,7 @@
 		F6D85E6B2B4EE86F007C9709 /* configuration.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = configuration.yml; sourceTree = "<group>"; };
 		F6D85E6D2B4EE86F007C9709 /* AutoMockable.stencil */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = AutoMockable.stencil; sourceTree = "<group>"; };
 		F6EACEF82B506DB300D2753A /* JSONWebStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSONWebStore.swift; sourceTree = "<group>"; };
+		F6EACEFE2B50BB1300D2753A /* UploadProgressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadProgressViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1412,6 +1414,7 @@
 		F69335442B1A55770049A997 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F6EACEFD2B50BAFB00D2753A /* UploadProgress */,
 				F6C154372B4F700E00C7959C /* AuthenticationPlaceholder */,
 				F66E9F532B3BA6B100311359 /* Navigation */,
 				F69335452B1A55770049A997 /* FormList */,
@@ -2172,6 +2175,14 @@
 			path = JSONWebStore;
 			sourceTree = "<group>";
 		};
+		F6EACEFD2B50BAFB00D2753A /* UploadProgress */ = {
+			isa = PBXGroup;
+			children = (
+				F6EACEFE2B50BB1300D2753A /* UploadProgressViewController.swift */,
+			);
+			path = UploadProgress;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -2386,6 +2397,7 @@
 				F69335842B1A55770049A997 /* MeasurementEditApplication.swift in Sources */,
 				F69335F92B1A55770049A997 /* NSAttributedString+ForPurpose.swift in Sources */,
 				F69335E72B1A55770049A997 /* TileView.swift in Sources */,
+				F6EACEFF2B50BB1300D2753A /* UploadProgressViewController.swift in Sources */,
 				F69335E82B1A55770049A997 /* TileViewController+MainScreenPresenter.swift in Sources */,
 				F693357D2B1A55770049A997 /* MeasureListDisplayBoundary.swift in Sources */,
 				F69335EA2B1A55770049A997 /* ItemListMultiLineTextEditView.swift in Sources */,
