@@ -73,7 +73,7 @@ extension ExportSupervisor: ParentSupervisor {
 
 extension ExportSupervisor: MicrosoftAuthSupervisorParent {
     private static let uploadDomain = "https://graph.microsoft.com/v1.0"
-    private static let uploadPath = "/me/drive/root:/NowChurning/exported.txt:/content"
+    private static let uploadPath = "/me/drive/root:/NowChurning/exported.json:/content"
     func didAuthenticate(
         token: String,
         identifier: String?
@@ -118,10 +118,15 @@ extension ExportSupervisor: MicrosoftAuthSupervisorParent {
                 switch step {
                 case .ingredient(let measure):
                     ingredientSet[measure.ingredient.id] = measure.ingredient
+                    for tag in measure.ingredient.tags {
+                        tagSet.insert(tag)
+                    }
+
                 case .ingredientTags(let tags, _):
                     for tag in tags {
                         tagSet.insert(tag)
                     }
+
                 case .instruction:
                     break
                 }
